@@ -1,12 +1,24 @@
 import React from "react";
 import "../css/Navbar.css";
 
-// const items = ["Home", "About Us", "Contact Us"];
 
-function Navbar() {
+
+// function Navbar(props) {
+//   var items = [
+//     { name: props.title1},
+//     {name: props.title2}
+    
+//   ];
+
+ function returning(props) {
+    var thisis = props.map((item) => <li id={item}>{item}</li>); // Use item.name directly
+  }
+
   return (
-    <>
-      <nav>li*</nav>
-    </>
+    <ul>
+      
+    </ul>
   );
-}
+
+
+export default Navbar;
