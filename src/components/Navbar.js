@@ -1,28 +1,52 @@
-import React from "react";
+import React, { useState } from "react";
+import {Link} from "react-router-dom";
 import "../css/Navbar.css";
-import {Link} from "react-router"
+import logo from "../images/logo.png";
 
+function Navbar() {
+  const [isActive ,setActive] =useState("Home");
 
-
-
- function Navbar(props) {
-  var items = [{ name: props.title1 }, { name: props.title2 },{name:props.title3}];
-
-  const titleName=()=>
-  {
-    return items.map((item) => <li className=" text-black"><Link>{item.name}</Link></li>);
-  }
-  
-    return (
-      <nav className="border-gray-100 border-b-2">
-        <ul className="flex space-x-10 px-5 py-3 justify-end">
-          {titleName()} 
+  return (
+    <nav className="flex justify-between px-10 py-3 border-b-2 border-gray-100 items-center shadow-sm">
+      <div className="logo flex flex-row space-x-2 items-center">
+        <img src={logo} alt="logo" className="h-10"></img>
+        <span className="hidden font-serif font-bold text-sm sm:contents">
+          Aarthik Upanyas
+        </span>
+      </div>
+      <div className="navBar">
+        <ul className="flex flex-row space-x-12 font-sans text-base font-medium text-gray-900 ">
+          <Link
+            to="/"
+            onClick={() => setActive("Home")}
+            className={`px-[15px] py-[8px] ${
+              isActive === "Home" ? "active" : "inactive"
+            }`}
+          >
+            <li>Home</li>
+          </Link>
+          <Link
+            to="/contact"
+            onClick={() => setActive("Contact")}
+            className={`px-[15px] py-[8px] ${
+              isActive === "Contact" ? "active" : "inactive"
+            }`}
+          >
+            <li>Contact</li>
+          </Link>
+          <Link
+            to="/about"
+            onClick={() => setActive("About")}
+            className={` px-[15px] py-[8px] ${
+              isActive === "About" ? "active" : "inactive"
+            }`}
+          >
+            <li>About Us</li>
+          </Link>
         </ul>
-        
-      </nav>
-    );
-    
-  }
+      </div>
+    </nav>
+  );
+}
 
- 
 export default Navbar;

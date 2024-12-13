@@ -1,0 +1,14 @@
+.active{
+     color:white;
+     background-color: red;
+    border-radius: 20px;
+    
+}
+.inactive:hover
+{
+    color:#2563EB;
+}
+.active:hover{
+     background-color: #2563EB;
+
+}

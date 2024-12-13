@@ -1,23 +1,25 @@
-import logo from "./logo.svg";
+
 import "./App.css";
 import Navbar from './components/Navbar';
-import { BrowserRouter, Routes, Route,Link } from "react-router";
+import Home from './components/Home';
+import About from './components/About';
+import Contact from './components/Contact';
+import { BrowserRouter,Routes,Route} from "react-router";
 
-const items = [
-  {name:"Home"},
-  {name:"About us"},
-  {name:"Contact"}
-];
+
 
 function App() {
   return (
-    <>
-    <BrowserRouter>
-      <Navbar title1={items[0].name} title2={items[1].name} title3={items[2].name}/> 
-      <Routes>
+    <> 
+      <BrowserRouter>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />}></Route>
+          <Route path="/about" element={<About />}></Route>
+          <Route path="/contact" element={<Contact />}></Route>
+        </Routes> 
+      </BrowserRouter>
       
-      </Routes> 
-    </BrowserRouter>
     </>
   );
 }
