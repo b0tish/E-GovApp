@@ -1,17 +1,23 @@
 import logo from "./logo.svg";
 import "./App.css";
-import Navbar from './components/Navbar'
+import Navbar from './components/Navbar';
+import { BrowserRouter, Routes, Route,Link } from "react-router";
 
 const items = [
-  {name:"home"},
-  {name:"about us"}
+  {name:"Home"},
+  {name:"About us"},
+  {name:"Contact"}
 ];
 
 function App() {
   return (
     <>
-    <Navbar title1={items[0].name}/>
-    
+    <BrowserRouter>
+      <Navbar title1={items[0].name} title2={items[1].name} title3={items[2].name}/> 
+      <Routes>
+      
+      </Routes> 
+    </BrowserRouter>
     </>
   );
 }
