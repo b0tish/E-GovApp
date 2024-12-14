@@ -1,25 +1,27 @@
-
-import "./App.css";
+import React from 'react'
 import Navbar from './components/Navbar';
-import Home from './components/Home';
-import About from './components/About';
-import Contact from './components/Contact';
+import Home from "./components/Home";
+import About from "./components/About";
+import Contact from "./components/Contact";
+import Login from "./components/Login";
+import Dashboard from "./components/Dashboard";
+import "./App.css";
+
 import { BrowserRouter,Routes,Route} from "react-router";
-
-
 
 function App() {
   return (
-    <> 
+    <>
       <BrowserRouter>
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />}></Route>
           <Route path="/about" element={<About />}></Route>
           <Route path="/contact" element={<Contact />}></Route>
-        </Routes> 
+          <Route path="/login" element={<Login />} />
+          <Route path="/dashboard" element={<Dashboard />}></Route>
+        </Routes>
       </BrowserRouter>
-      
     </>
   );
 }
