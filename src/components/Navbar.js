@@ -1,12 +1,3 @@
-<<<<<<< HEAD
-const Navbar = () => {
-  return ( 
-    <></>
-   );
-}
- 
-export default Navbar;
-=======
 import React, { useState } from "react";
 import {Link} from "react-router-dom";
 import "../css/Navbar.css";
@@ -59,4 +50,3 @@ function Navbar() {
 }
 
 export default Navbar;
->>>>>>> db5647f3e9fd634e570db4503022eae4aea8daee
