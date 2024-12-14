@@ -4,7 +4,6 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-<<<<<<< HEAD
         inter: ["Inter", "sans-serif"],
         poppins: ["Poppins", "sans-serif"],
         concert: ['"Concert One"', "cursive"],
@@ -15,9 +14,6 @@ module.exports = {
         kalam: ["Kalam", "Noto Sans Devanagari"],
 
         amita: ["amita", "Noto Sans Devanagari"],
-=======
-        sans: ["Inter", "ui-sans-serif", "system-ui"],
->>>>>>> abik
       },
     },
   },
