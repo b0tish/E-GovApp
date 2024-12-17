@@ -1,0 +1,17 @@
+.accordiontrigger {
+    display: flex;
+    border-bottom: 1px solid #EFEFF1;
+    width: 100%;
+    font-size: 20px;
+    margin-bottom: 2px;
+    padding: 3px;
+    transition: background-color 0.2s ease;
+    text-align: left;
+}
+
+
+
+.accordiontrigger:hover {
+    text-decoration: underline;
+    background-color: #f7fafc;
+}

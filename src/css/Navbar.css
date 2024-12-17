@@ -1,4 +1,19 @@
+<<<<<<< HEAD
 ul{
     /* float:right; */
+=======
+.active{
+     color:white;
+     background-color: red;
+    border-radius: 20px;
+    
+}
+.inactive:hover
+{
+    color:#2563EB;
+}
+.active:hover{
+     background-color: #2563EB;
+>>>>>>> cb277b135c3afdac5c3a6d986181e41a0722f593
 
 }
