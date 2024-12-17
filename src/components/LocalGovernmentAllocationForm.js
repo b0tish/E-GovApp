@@ -11,7 +11,8 @@ const LocalGovernmentAllocationForm = () => {
     const [districts, setdistricts] = useState(districtsProvince[provinces[0]]);
 
     return ( 
-        <div className="w-[500px] p-8 rounded-xl border-2 border-gray-200">
+        <div className="h-screen flex justify-center items-center">
+            <div className="w-[500px] p-8 rounded-xl border-2 border-gray-200">
             <div className="text-3xl font-bold">Budget Allocation</div>
             <form method="POST">
                 <div className="pt-6">
@@ -41,6 +42,7 @@ const LocalGovernmentAllocationForm = () => {
                     <input className="w-full p-3 text-white font-bold bg-black rounded-lg" type="submit" value="Save" />
                 </div>
             </form>
+        </div>
         </div>
      );
 }
