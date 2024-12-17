@@ -1,25 +1,23 @@
 import React from "react";
 import "../css/Navbar.css";
-var items = [
-  { name: props.title1},
-  {name: props.title2}
-]
 
 
  function Navbar(props) {
-  fu
-  
+  var items = [
+    { name: props.title1},
+    {name: props.title2}
+  ]
+  function returnTitle()
+  {
+    return items.map(item => <li>{item.name}</li>)
+  }
     return (
-      <ul>
-        
-      </ul>
+      <div>
+          <ul>    
+            {returnTitle()}
+          </ul>
+      </div>
     );
     
   }
-
- 
-
-  
-
-
 export default Navbar;
