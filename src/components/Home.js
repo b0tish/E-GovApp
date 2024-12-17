@@ -2,7 +2,7 @@ import React from "react";
 import Banner from "./Banner";
 import nepalFlag from "../images/nepalFlag.jpg";
 
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom";
 
 function Home() {
   return (
@@ -30,7 +30,6 @@ function Home() {
           </div>
         </div>
       </div>
-
     </>
   );
 }
