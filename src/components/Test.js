@@ -1,6 +1,6 @@
 import React from "react";
  const Test = () =>{
     return(<>
-    <h1>Hello i am Laali</h1>
+    <p> Chai piyo biscuit khaao</p>
     </>);
  }
