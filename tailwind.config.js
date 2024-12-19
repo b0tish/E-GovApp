@@ -61,9 +61,6 @@ module.exports = {
       },
 
       fontFamily: {
-<<<<<<< HEAD
-        sans: ["Inter", "ui-sans-serif", "system-ui"],
-=======
         inter: ["Inter", "sans-serif"],
         poppins: ["Poppins", "sans-serif"],
         concert: ['"Concert One"', "cursive"],
@@ -74,7 +71,6 @@ module.exports = {
         kalam: ["Kalam", "Noto Sans Devanagari"],
 
         amita: ["amita", "Noto Sans Devanagari"],
->>>>>>> cb277b135c3afdac5c3a6d986181e41a0722f593
       },
     },
   },
