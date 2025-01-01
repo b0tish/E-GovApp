@@ -1,10 +1,18 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import {Link} from "react-router-dom";
 import "../css/Navbar.css";
 import logo from "../images/logo.png";
 
 function Navbar() {
-  const [isActive ,setActive] =useState("Home");
+  // Initialize state with sessionStorage if null then set to "Home"
+  const [isActive, setActive] = useState(
+    sessionStorage.getItem("activeTab") || "Home"
+  );
+
+  // Whenever isActive changes the activeTab set set to isActive in a Session.
+  useEffect(() => {
+    sessionStorage.setItem("activeTab", isActive);
+  }, [isActive]);
 
   return (
     <nav className="flex justify-between px-10 py-3 border-b-2 border-gray-100 items-center shadow-sm">
