@@ -5,14 +5,14 @@ import logo from "../images/logo.png";
 
 function Navbar() {
   // Initialize state with sessionStorage if null then set to "Home"
-  const [isActive, setActive] = useState(
+  const [activeTab, setActive] = useState(
     sessionStorage.getItem("activeTab") || "Home"
   );
 
-  // Whenever isActive changes the activeTab set set to isActive in a Session.
+  // Whenever activeTab changes the activeTab set set to activeTab in a Session.
   useEffect(() => {
-    sessionStorage.setItem("activeTab", isActive);
-  }, [isActive]);
+    sessionStorage.setItem("activeTab", activeTab);
+  }, [activeTab]);
 
   return (
     <nav className="flex justify-between px-10 py-3 border-b-2 border-gray-100 items-center shadow-sm">
@@ -29,7 +29,7 @@ function Navbar() {
             to="/"
             onClick={() => setActive("Home")}
             className={`px-[25px] py-[8px] ${
-              isActive === "Home" ? "active" : "inactive"
+              activeTab === "Home" ? "active" : "inactive"
             }`}
           >
             <li>Home</li>
@@ -38,7 +38,7 @@ function Navbar() {
             to="/contact"
             onClick={() => setActive("Contact")}
             className={`px-[25px] py-[8px] ${
-              isActive === "Contact" ? "active" : "inactive"
+              activeTab === "Contact" ? "active" : "inactive"
             }`}
           >
             <li>Contact</li>
@@ -47,7 +47,7 @@ function Navbar() {
             to="/about"
             onClick={() => setActive("About")}
             className={` px-[25px] py-[8px] ${
-              isActive === "About" ? "active" : "inactive"
+              activeTab === "About" ? "active" : "inactive"
             }`}
           >
             <li>About Us</li>
