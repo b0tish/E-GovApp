@@ -10,9 +10,8 @@ function Home() {
   );
 
   useEffect(() => {
-    const loggedInStatus = sessionStorage.getItem("isLoggedIn");
+    const loggedInStatus = sessionStorage.getItem("isLoggedIn") === "true" ? "true" : "false";
     setIsLoggedIn(loggedInStatus);
-    console.log("Login status changed:", loggedInStatus); // log sessionStorage value here
   }, [location]); 
 
   return <>{isLoggedIn === "false" ? <HomePublic /> : <HomePrivate />}</>;
