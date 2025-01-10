@@ -3,6 +3,7 @@ import { useState } from "react";
 const MinistryAllocationForm = () => {
     const ministries = ["Ministry of Education", "Ministry of Health and Population", "Ministry of Defence"];
 
+    const mofRemainingBudget = 1000000000;
     // const [districts, setdistricts] = useState(districtsProvince[provinces[0]]);
 
     return ( 
@@ -24,6 +25,13 @@ const MinistryAllocationForm = () => {
                             <option value={ministry}>{ministry}</option>
                         ))}
                     </select>
+                </div>
+
+                <div className="pt-6">
+                    <label className="font-bold block mb-2" htmlFor="ministry">Remaining Budget</label>
+                    <div className="w-full p-3 border-2 border-gray-200 rounded-lg bg-white" id="ministry">
+                        { mofRemainingBudget }
+                    </div>
                 </div>
 
                 <div className="pt-6">
