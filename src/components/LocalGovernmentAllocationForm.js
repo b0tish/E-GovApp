@@ -3,12 +3,22 @@ import { useState } from "react";
 const LocalGovernmentAllocationForm = () => {
     const provinces = ["bagmati", "karnali", "gandaki"];
     const districtsProvince = {
-            "bagmati": ["Lalitpur", "Kathmandu", "Bhaktapur"],
-            "karnali": ["Pokhara", "District 12"],
-            "gandaki": ["District 34", "District 69"],
+            "bagmati": {
+                "govtBodies": ["Lalitpur", "Kathmandu", "Bhaktapur"],
+                "remainingBudget": 500000,
+            },
+            "karnali": {
+                "govtBodies": ["Pokhara", "District 12"],
+                "remainingBudget": 400000,
+            },
+            "gandaki": {
+                "govtBodies": ["District 34", "District 69"],
+                "remainingBudget": 390000,
+            },
         }
 
-    const [districts, setdistricts] = useState(districtsProvince[provinces[0]]);
+    const [districts, setdistricts] = useState(districtsProvince[provinces[0]]["govtBodies"]);
+    const [budget, setBudget]= useState(districtsProvince[provinces[0]]["remainingBudget"]);
 
     return ( 
         <div className="h-screen flex justify-center items-center">
@@ -17,7 +27,10 @@ const LocalGovernmentAllocationForm = () => {
             <form method="POST">
                 <div className="pt-6">
                     <label className="font-bold block mb-2" htmlFor="province">Province</label>
-                    <select className="w-full p-3 border-2 border-gray-200 rounded-lg bg-white" id="province" onChange={(e) => setdistricts(districtsProvince[e.target.value])}>
+                    <select className="w-full p-3 border-2 border-gray-200 rounded-lg bg-white" id="province" onChange={(e) => {
+                        setdistricts(districtsProvince[e.target.value]["govtBodies"])
+                        setBudget(districtsProvince[e.target.value]["remainingBudget"])
+                    }}>
                         {provinces.map(province => (
                             <option value={province}>{province}</option>
                         ))}
@@ -31,6 +44,13 @@ const LocalGovernmentAllocationForm = () => {
                             <option value={district}>{district}</option>
                         ))}
                     </select>
+                </div>
+
+                <div className="pt-6">
+                    <label className="font-bold block mb-2" htmlFor="ministry">Remaining Budget</label>
+                    <div className="w-full p-3 border-2 border-gray-200 rounded-lg bg-white" id="ministry">
+                        { budget }
+                    </div>
                 </div>
 
                 <div className="pt-6">
