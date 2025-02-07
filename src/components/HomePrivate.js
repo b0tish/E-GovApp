@@ -8,8 +8,8 @@ function HomePrivate() {
       <Link to="/dashboard">
         <Card title="Dashboard"/>
       </Link >
-      <Link to="/allocation">
-        <Card title="Allocation"/>
+      <Link to="/allocations">
+        <Card title="Allocations"/>
       </Link>
       <Link to="/tracking">
         <Card title="Tracking"/>
