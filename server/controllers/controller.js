@@ -7,6 +7,8 @@ const addProvince = async (req, res) => {
     await province.save();
     res.status(201).json(province);
   } catch (error) {
+    console.error("Error adding province:", error); // Log the error
+    console.error("Mongoose validation errors:", error.errors); // Log Mongoose validation errors
     res.status(400).json({ error: error.message });
   }
 };
