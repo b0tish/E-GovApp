@@ -14,6 +14,7 @@ import LocalGovernmentAllocationForm from "./components/LocalGovernmentAllocatio
 import PageNotFound from "./components/PageNotFound";
 // import Allocations from "./components/Allocations";
 import LocalList from "./components/LocalList";
+import Allocations from "./components/Allocations";
 
 function App() {
   return (
@@ -37,6 +38,8 @@ function App() {
             <Route path="province" element={<ProvinceAllocationForm />} />
             <Route path="ministry" element={<MinistryAllocationForm />} />
           </Route>
+
+          <Route path="/allocations" element={<Allocations />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>
