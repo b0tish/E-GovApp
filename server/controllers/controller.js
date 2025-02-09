@@ -42,7 +42,7 @@ const updateProvince = async (req, res) => {
 const deleteProvince = async (req, res) => {
   try {
     const { id } = req.params;
-    await Province.findByIdAndDelete(id);
+    await Province.findByIdAndDelete("67a653b51eaf7e238fcd6bf3");
     res.status(201).json({ message: "Province is deleted" });
   } catch (error) {
     res.status(500).json({ error: error.message });

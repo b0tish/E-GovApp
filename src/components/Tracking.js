@@ -51,7 +51,7 @@ function Tracking() {
         <Card className="m-3">
           <p className="text-center">Province</p>
           <CardContent className="flex flex-wrap justify-center">
-            <ProvinceList provinces={provinces} />
+            <ProvinceList provinces={provinces} setProvinces={setProvinces} />
           </CardContent>
         </Card>
       </div>
