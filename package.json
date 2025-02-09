@@ -24,7 +24,7 @@
   "scripts": {
     "start": "concurrently \"npm run server\" \"npm run client\"",
     "client": "react-scripts start",
-    "server": "cd server && npm start",
+    "server": "node server/server.js ",
     "install-all": "npm install && cd server && npm install",
     "build": "react-scripts build",
     "test": "react-scripts test",
