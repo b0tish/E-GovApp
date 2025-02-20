@@ -1,8 +1,32 @@
 import mongoose from "mongoose";
-const { Schema } = mongoose;
 
-const schema = new Schema({
-  title: String,
+const localSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  totalBudget: { type: Number, required: true },
+  spentBudget: { type: Number, required: true },
+  remainingBudget: {
+    type: Number,
+    required: true,
+    default: function() {
+      return this.totalBudget - this.spentBudget;
+    },
+  },
 });
 
-export default mongoose.model("data", schema);
+const provinceSchema = new mongoose.Schema({
+  name: { type: String, required: true, unique: true },
+  totalBudget: { type: Number, required: true },
+  spentBudget: { type: Number, required: true },
+  remainingBudget: {
+    type: Number,
+    required: true,
+    default: function() {
+      return this.totalBudget - this.spentBudget;
+    },
+  },
+  locals: [localSchema],
+});
+
+const Province = mongoose.model("Province", provinceSchema);
+
+export { Province };

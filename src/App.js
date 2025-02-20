@@ -12,7 +12,9 @@ import ProvinceAllocationForm from "./components/ProvinceAllocationForm";
 import MinistryAllocationForm from "./components/MinistryAllocationForm";
 import LocalGovernmentAllocationForm from "./components/LocalGovernmentAllocationForm";
 import PageNotFound from "./components/PageNotFound";
-
+// import Allocations from "./components/Allocations";
+import LocalList from "./components/LocalList";
+import Allocations from "./components/Allocations";
 
 function App() {
   return (
@@ -22,19 +24,22 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
-
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/tracking" element={<Tracking />} />
-          
+          <Route path="/province/:provinceId/locals" element={<LocalList />} />
           <Route path="/allocation">
             <Route index element={<PageNotFound />} />
-            <Route path="localgovernment" element={<LocalGovernmentAllocationForm />} />
+            <Route
+              path="localgovernment"
+              element={<LocalGovernmentAllocationForm />}
+            />
             <Route path="province" element={<ProvinceAllocationForm />} />
             <Route path="ministry" element={<MinistryAllocationForm />} />
           </Route>
 
+          <Route path="/allocations" element={<Allocations />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>

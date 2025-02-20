@@ -1,4 +1,3 @@
-import { useState } from "react";
 
 const MinistryAllocationForm = () => {
     const ministries = ["Ministry of Education", "Ministry of Health and Population", "Ministry of Defence"];
@@ -7,8 +6,8 @@ const MinistryAllocationForm = () => {
     // const [districts, setdistricts] = useState(districtsProvince[provinces[0]]);
 
     return ( 
-        <div className="h-screen flex justify-center items-center">
-            <div className="w-[500px] p-8 rounded-xl border-2 border-gray-200">
+        <div className="w-screen min-h-screen mt-10 flex justify-center items-center">
+            <div className="w-1/2 p-8 rounded-xl border-2 border-gray-200">
             <div className="text-3xl font-bold">Budget Allocation</div>
             <form method="POST">
                 <div className="pt-6">
@@ -36,7 +35,12 @@ const MinistryAllocationForm = () => {
 
                 <div className="pt-6">
                     <label className="font-bold block mb-2" htmlFor="budget">Budget</label>
-                    <input className="w-full p-3 border-2 border-gray-200 rounded-lg bg-white" type="number" id="budget" placeholder="In Rupees. (Ex: 1000000)" />
+                    <input className="w-full p-3 border-2 border-gray-200 rounded-lg bg-white" type="number" step={10000} id="budget" placeholder="In Rupees. (Ex: 1000000)" />
+                </div>
+
+                <div className="pt-6">
+                    <label className="font-bold block mb-2" htmlFor="description">Description</label>
+                    <textarea className="w-full p-3 border-2 border-gray-200 rounded-lg bg-white" rows={10} id="description" ></textarea>
                 </div>
 
                 <div className="pt-6">
