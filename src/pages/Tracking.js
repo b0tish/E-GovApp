@@ -1,9 +1,9 @@
 import "../css/Tracking.css";
 import { useEffect, useState } from "react";
-import { CardContent, Card } from "./ui/card";
-import ProvinceList from "./ProvinceList";
-import AddProvinceForm from "./AddProvinceForm";
-import AddLocalForm from "./AddLocalForm";
+import { CardContent, Card } from "../components/ui/card";
+import ProvinceList from "../components/ProvinceList";
+import AddProvinceForm from "../components/AddProvinceForm";
+import AddLocalForm from "../components/AddLocalForm";
 
 function Tracking() {
   const [provinces, setProvinces] = useState([]);

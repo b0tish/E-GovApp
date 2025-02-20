@@ -1,20 +1,24 @@
 import React from "react";
 import Navbar from "./components/Navbar";
-import Home from "./components/Home";
-import About from "./components/About";
-import Contact from "./components/Contact";
-import Login from "./components/Login";
-import Dashboard from "./components/Dashboard";
-import Tracking from "./components/Tracking";
+import Home from "./pages/Home";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+import Login from "./pages/Login";
+import Dashboard from "./pages/Dashboard";
+import Tracking from "./pages/Tracking";
 import { BrowserRouter, Routes, Route } from "react-router";
 import "./App.css";
-import ProvinceAllocationForm from "./components/ProvinceAllocationForm";
-import MinistryAllocationForm from "./components/MinistryAllocationForm";
-import LocalGovernmentAllocationForm from "./components/LocalGovernmentAllocationForm";
-import PageNotFound from "./components/PageNotFound";
+import ProvinceAllocationForm from "./pages/ProvinceAllocationForm";
+import MinistryAllocationForm from "./pages/MinistryAllocationForm";
+import LocalGovernmentAllocationForm from "./pages/LocalGovernmentAllocationForm";
+import PageNotFound from "./pages/PageNotFound";
 // import Allocations from "./components/Allocations";
-import LocalList from "./components/LocalList";
-import Allocations from "./components/Allocations";
+import LocalList from "./pages/LocalList";
+import Allocations from "./pages/Allocations";
+import Search from "./pages/Search";
+import MinistryTracking from "./pages/MinistryTracking";
+import ProvincialTracking from "./pages/ProvincialTracking";
+import LocalTracking from "./pages/LocalTracking";
 
 function App() {
   return (
@@ -41,6 +45,10 @@ function App() {
 
           <Route path="/allocations" element={<Allocations />} />
           <Route path="*" element={<PageNotFound />} />
+          <Route path="/:role" element={<Search />} />
+          <Route path="/ministry/:mName" element={<MinistryTracking />} />
+          <Route path="/province/:pName" element={<ProvincialTracking />} />
+          <Route path="/local/:lName" element={<LocalTracking />} />
         </Routes>
       </BrowserRouter>
     </>
