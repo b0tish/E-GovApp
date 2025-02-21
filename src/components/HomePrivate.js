@@ -14,8 +14,8 @@ function HomePrivate() {
       <Link to="/tracking">
         <Card title="Tracking" />
       </Link>
-      <Link>
-        <Card />
+      <Link to="/AddProvinceForm">
+        <Card title="Add" />
       </Link>
     </div>
   );
