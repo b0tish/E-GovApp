@@ -1,5 +1,4 @@
 import React from "react";
-import { ChartBarIcon } from "@heroicons/react/solid";
 
 function Card({ title,imageSrc }) {
   return (

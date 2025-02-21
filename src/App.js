@@ -19,6 +19,7 @@ import MinistryTracking from "./pages/MinistryTracking";
 import ProvincialTracking from "./pages/ProvincialTracking";
 import LocalTracking from "./pages/LocalTracking";
 import NationalTracking from "./pages/NationalTracking";
+import Test from "./pages/Test";
 
 function App() {
   return (
@@ -50,6 +51,7 @@ function App() {
           <Route path="/ministry/:mName" element={<MinistryTracking />} />
           <Route path="/province/:pName" element={<ProvincialTracking />} />
           <Route path="/local/:lName" element={<LocalTracking />} />
+          <Route path="/test" element={<Test/>}></Route>
         </Routes>
       </BrowserRouter>
     </>

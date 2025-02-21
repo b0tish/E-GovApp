@@ -30,7 +30,7 @@ function Navbar() {
    };
 
   return (
-    <nav className="flex justify-between px-10 py-3 border-b-2 border-gray-100 items-center shadow-sm bg-white sticky top-0">
+    <nav className="flex justify-between px-10 py-3 border-b-2 border-gray-100 items-center shadow-sm bg-white sticky top-0 z-50">
       <div className="logo flex flex-row space-x-2 items-center">
         <img src={logo} alt="logo" className="h-10" />
         <span className="hidden font-kalam font-bold text-sm sm:contents">
