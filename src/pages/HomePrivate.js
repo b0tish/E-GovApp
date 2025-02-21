@@ -9,7 +9,7 @@ function HomePrivate() {
         <Link to="/dashboard">
           <Card title="Your Dashboard" imageSrc="/dashboard.jpg" />
         </Link>
-        <Link to="/dashboard">
+        <Link to="/national">
           <Card title="National Level Tracking" imageSrc="./emblem.png" />
         </Link>
         <Link to="/ministry">

@@ -12,7 +12,7 @@ const data = {
   labels: ["A", "B", "C", "D"],
   datasets: [
     {
-      data: [400, 300, 300, 200],
+      data: [400, 300, 300, 200,],
       backgroundColor: [
         "rgba(255, 99, 132, 0.8)",
         "rgba(54, 162, 235, 0.8)",

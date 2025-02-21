@@ -12,13 +12,13 @@ import ProvinceAllocationForm from "./pages/ProvinceAllocationForm";
 import MinistryAllocationForm from "./pages/MinistryAllocationForm";
 import LocalGovernmentAllocationForm from "./pages/LocalGovernmentAllocationForm";
 import PageNotFound from "./pages/PageNotFound";
-// import Allocations from "./components/Allocations";
 import LocalList from "./pages/LocalList";
 import Allocations from "./pages/Allocations";
 import Search from "./pages/Search";
 import MinistryTracking from "./pages/MinistryTracking";
 import ProvincialTracking from "./pages/ProvincialTracking";
 import LocalTracking from "./pages/LocalTracking";
+import NationalTracking from "./pages/NationalTracking";
 
 function App() {
   return (
@@ -46,6 +46,7 @@ function App() {
           <Route path="/allocations" element={<Allocations />} />
           <Route path="*" element={<PageNotFound />} />
           <Route path="/:role" element={<Search />} />
+          <Route path="/national" element={<NationalTracking/>}></Route>
           <Route path="/ministry/:mName" element={<MinistryTracking />} />
           <Route path="/province/:pName" element={<ProvincialTracking />} />
           <Route path="/local/:lName" element={<LocalTracking />} />
