@@ -15,6 +15,7 @@ import PageNotFound from "./components/PageNotFound";
 // import Allocations from "./components/Allocations";
 import LocalList from "./components/LocalList";
 import Allocations from "./components/Allocations";
+import Register from "./components/Register";
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
           </Route>
 
           <Route path="/allocations" element={<Allocations />} />
+          <Route path="/register" element={<Register />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>

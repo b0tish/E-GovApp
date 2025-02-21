@@ -3,15 +3,33 @@ import cors from "cors";
 import { conn } from "./config/dbconnection.js";
 import { router } from "./routes/routes.js";
 import * as dotenv from "dotenv";
+import sessionController from "./controllers/sessionController.js";
 
 dotenv.config();
 
 const app = express();
 
-conn();
+conn().then(() => {
+  console.log("Connected to MongoDB");
 
-app.use(cors());
+  app.use(
+    cors({
+      origin: "http://localhost:3000",
+      credentials: true,
+    }),
+  );
+});
+
+// app.use(
+//   cors({
+//     origin: "http://localhost:3000",
+//     credentials: true,
+//   }),
+// );
+// d
 app.use(express.json());
+
+app.use(sessionController);
 
 app.use("/", router);
 
