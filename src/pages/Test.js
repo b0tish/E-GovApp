@@ -1,72 +1,64 @@
-import React, { useState } from "react";
+import React from "react";
+import { Bar } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
 
-const API_KEY =process.env.REACT_APP_TOKEN_API; // Replace with your actual API key
-console.log(API_KEY);
+// Register necessary components
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
+const PercentageBarChart = () => {
+  // Sample data for the percentage bar chart
+  const data = {
+    labels: ["January", "February", "March", "April"],
+    datasets: [
+      {
+        label: "Part Covered",
+        data: [60, 80, 40, 90], // Represents the part covered for each month
+        backgroundColor: "rgba(54, 162, 235, 1)", // Solid blue color for the part
+        // For a covered effect, we can use a negative value
+        borderWidth: 1, // Width of the border (optional)
+      },
+      {
+        label: "Total",
+        data: [100, 100, 100, 100], // Represents the whole total for each month
+        backgroundColor: "rgba(255, 99, 132, 0.6)", // Red color for total
+      },
+    ],
+  };
 
-const Test = () => {
-  const [prompt, setPrompt] = useState("Tell me about Football");
-  const [generatedText, setGeneratedText] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  const generateText = async () => {
-    if (!prompt) return alert("Please enter a prompt!");
-
-    setLoading(true);
-    setGeneratedText(""); // Clear previous result
-
-    try {
-      const response = await fetch(
-        "https://api-inference.huggingface.co/models/google/gemma-2-2b-it",
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${API_KEY}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ inputs: prompt }),
-        }
-      );
-
-      const data = await response.json();
-
-      if (response.ok) {
-        setGeneratedText(data[0]?.generated_text || "No response generated.");
-      } else {
-        setGeneratedText("Error generating text.");
-      }
-    } catch (error) {
-      setGeneratedText("Error: " + error.message);
-    }
-
-    setLoading(false);
+  const options = {
+    scales: {
+      x: {
+        stacked: true, // Enable stacking
+      },
+    },
+    plugins: {
+      title: {
+        display: true,
+        text: "Percentage Bar Chart",
+      },
+    },
   };
 
   return (
-    <div className="p-6 max-w-md mx-auto bg-white shadow-md rounded-lg">
-      <h2 className="text-xl font-bold mb-4">AI Text Generator</h2>
-      <textarea
-        className="w-full p-2 border rounded-md"
-        placeholder="Enter your prompt..."
-        value={prompt}
-        onChange={(e) => setPrompt(e.target.value)}
-      />
-      <button
-        className="mt-4 w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600"
-        onClick={generateText}
-        disabled={loading}
-      >
-        {loading ? "Generating..." : "Generate Text"}
-      </button>
-
-      {generatedText && (
-        <div className="mt-4 p-3 bg-gray-100 rounded-md">
-          <strong>Generated Text:</strong>
-          <p>{generatedText}</p>
-        </div>
-      )}
+    <div style={{ width: "600px", height: "400px" }}>
+      <Bar data={data} options={options} />
     </div>
   );
 };
 
-export default Test;
+export default PercentageBarChart;
