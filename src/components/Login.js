@@ -4,14 +4,35 @@ import { useNavigate } from "react-router-dom";
 function Login({ isLoggedIn, setIsLoggedIn }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleLogin = () => {
-   
-      sessionStorage.setItem("userRole", "government");
-      sessionStorage.setItem("isLoggedIn", "true");
-      navigate("/");
-   
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("http://localhost:5000/login", {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+      if (data.success) {
+        console.log("Login successful:", data);
+
+        if (data.role === "admin") {
+          navigate("/admin-home");
+        } else {
+          navigate("/home");
+        }
+      } else {
+        setError(data.msg);
+      }
+    } catch (error) {
+      setError("Error occured.");
+      console.error("Login failed:", error.message);
+    }
   };
 
   return (
@@ -30,6 +51,8 @@ function Login({ isLoggedIn, setIsLoggedIn }) {
         placeholder="Password"
       />
       <button onClick={handleLogin}>Login</button>
+
+      {error && <p style={{ color: "red" }}> {error}</p>}
     </div>
   );
 }

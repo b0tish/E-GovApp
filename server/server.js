@@ -3,11 +3,13 @@ import cors from "cors";
 import { conn } from "./config/dbconnection.js";
 import { router } from "./routes/routes.js";
 import * as dotenv from "dotenv";
-import sessionController from "./controllers/sessionController.js";
+import cookieParser from "cookie-parser";
 
 dotenv.config();
 
 const app = express();
+app.use(express.json());
+app.use(cookieParser());
 
 conn().then(() => {
   console.log("Connected to MongoDB");
@@ -18,20 +20,9 @@ conn().then(() => {
       credentials: true,
     }),
   );
+
+  app.use("/", router);
 });
-
-// app.use(
-//   cors({
-//     origin: "http://localhost:3000",
-//     credentials: true,
-//   }),
-// );
-// d
-app.use(express.json());
-
-app.use(sessionController);
-
-app.use("/", router);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

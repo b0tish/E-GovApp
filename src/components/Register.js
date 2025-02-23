@@ -7,11 +7,11 @@ function Register() {
   const [passwordError, setPasswordError] = useState("");
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [role, setRole] = useState("user");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Client-side validation
     let isValid = true;
     if (!email) {
       setEmailError("Email is required");
@@ -39,17 +39,13 @@ function Register() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email, password, role }),
       });
 
       if (response.ok) {
-        // Registration successful
         setRegistrationSuccess(true);
         setErrorMessage("");
-        // Redirect to login page or dashboard (replace with your actual route)
-        // window.location.href = "/login"; // Not recommended for React Router
       } else {
-        // Registration failed
         const data = await response.json();
         setErrorMessage(data.message || "Unknown error");
         setRegistrationSuccess(false);
@@ -69,7 +65,6 @@ function Register() {
           <p>Registration successful!</p>
           <p>
             Please <a href="/login">login</a>.{" "}
-            {/* Replace with your login route */}
           </p>
         </div>
       ) : (
@@ -96,6 +91,11 @@ function Register() {
               onChange={(e) => setPassword(e.target.value)}
               required
             />
+            <select value={role} onChange={(e) => setRole(e.target.value)}>
+              <option value="user">User</option>
+
+              <option value="admin">Admin</option>
+            </select>
             <div className="error-message">{passwordError}</div>
           </div>
           <button type="submit">Register</button>
