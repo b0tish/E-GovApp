@@ -53,6 +53,7 @@ export const AuthProvider = ({ children }) => {
       });
 
       if (response.ok) {
+        console.log("LoingOut");
         setUser(null);
         setIsLoggedIn(false);
       } else {

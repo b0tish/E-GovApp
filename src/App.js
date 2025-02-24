@@ -19,12 +19,12 @@ import MinistryTracking from "./pages/MinistryTracking";
 import ProvincialTracking from "./pages/ProvincialTracking";
 import LocalTracking from "./pages/LocalTracking";
 import NationalTracking from "./pages/NationalTracking";
-import Test from "./pages/Test";
+
 import { AuthProvider } from "./components/AuthContext";
-import HomePublic from "./pages/HomePublic";
-import ProtectedRoute from "./components/ProtectedRoute";
+
 import HomePrivate from "./pages/HomePrivate";
 import Register from "./pages/Register";
+import Testy from "./pages/testy";
 
 function App() {
   return (
@@ -39,7 +39,8 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/dashboard/:level" element={<Dashboard />} />
+            <Route path="/dashboard/:level/:name" element={<Dashboard />} />
             <Route path="/tracking" element={<Tracking />} />
             <Route
               path="/province/:provinceId/locals"
@@ -57,13 +58,13 @@ function App() {
             <Route path="/allocations" element={<Allocations />} />
             <Route path="/register" element={<Register />} />
             <Route path="/allocations" element={<Allocations />} />
-            <Route path="*" element={<PageNotFound />} />
-            <Route path="/:role" element={<Search />} />
+            <Route path="/search/:level" element={<Search />} />
+
             <Route path="/national" element={<NationalTracking />}></Route>
             <Route path="/ministry/:mName" element={<MinistryTracking />} />
             <Route path="/province/:pName" element={<ProvincialTracking />} />
             <Route path="/local/:lName" element={<LocalTracking />} />
-            <Route path="/test" element={<Test />}></Route>
+            <Route path="/testy" element={<Testy />}></Route>
           </Routes>
         </BrowserRouter>
       </AuthProvider>

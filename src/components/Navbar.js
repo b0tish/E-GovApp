@@ -7,7 +7,7 @@ import { useAuth } from "./AuthContext";
 
 function Navbar() {
   const navigate = useNavigate();
-  const { user, isLoggedIn, logout } = useAuth();
+  const { logout } = useAuth();
 
   // Initialize state with sessionStorage if null then set to "Home"
   const [activeTab, setActive] = useState(
@@ -21,7 +21,7 @@ function Navbar() {
 
   // Handle logout logic
   const handleLogout = async () => {
-    await logout;
+    await logout();
     navigate("/");
   };
 

@@ -5,7 +5,7 @@ import {defaults,} from "chart.js";
 
 defaults.maintainAspectRatio =false;
 defaults.responsive=true;
-defaults.plugins.legend.position="bottom"
+defaults.plugins.legend.position="bottom";
 
 
 const ExpectedRevenue = ({ data }) => {

@@ -3,8 +3,11 @@ import React, { useState } from "react";
 function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setName] = useState(""); // Added state for name
+  const [level, setLevel] = useState("National"); // Added state for level
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [nameError, setNameError] = useState(""); // Added state for name error
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [role, setRole] = useState("user");
@@ -28,6 +31,12 @@ function Register() {
     } else {
       setPasswordError("");
     }
+    if (level !== "National" && !name) {
+      setNameError("Name is required");
+      isValid = false;
+    } else {
+      setNameError("");
+    }
 
     if (!isValid) {
       return;
@@ -39,7 +48,7 @@ function Register() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password, role }),
+        body: JSON.stringify({ email, password, role, name, level }), // Include name and level
       });
 
       if (response.ok) {
@@ -64,7 +73,7 @@ function Register() {
         <div>
           <p>Registration successful!</p>
           <p>
-            Please <a href="/login">login</a>.{" "}
+            Please <a href="/login">login</a>.
           </p>
         </div>
       ) : (
@@ -91,13 +100,39 @@ function Register() {
               onChange={(e) => setPassword(e.target.value)}
               required
             />
-            <select value={role} onChange={(e) => setRole(e.target.value)}>
-              <option value="user">User</option>
-
-              <option value="admin">Admin</option>
-            </select>
             <div className="error-message">{passwordError}</div>
           </div>
+          <div className="form-group">
+            <label htmlFor="level">Level:</label>
+            <select
+              id="level"
+              value={level}
+              onChange={(e) => setLevel(e.target.value)}
+            >
+              <option value="National">National</option>
+              <option value="Province">Province</option>
+              <option value="Local">Local</option>
+              <option value="Ministry">Ministry</option>
+            </select>
+          </div>
+          {level !== "National" && (
+            <div className="form-group">
+              <label htmlFor="name">Name:</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required={level !== "National"}
+              />
+              <div className="error-message">{nameError}</div>
+            </div>
+          )}
+          <select value={role} onChange={(e) => setRole(e.target.value)}>
+            <option value="user">User</option>
+            <option value="admin">Admin</option>
+          </select>
           <button type="submit">Register</button>
           {errorMessage && <div className="error-message">{errorMessage}</div>}
         </form>

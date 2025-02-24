@@ -1,31 +1,40 @@
 import React, { useEffect, useState } from "react";
 import { Pie } from "react-chartjs-2";
-import { defaults} from "chart.js";
+import { Chart, registerables,defaults } from "chart.js";
+
+Chart.register(...registerables);
 
 
-
+defaults.maintainAspectRatio = false;
 defaults.responsive=true;
-defaults.plugins.legend.position="bottom"
+if (!defaults.plugins) {
+  defaults.plugins = {};
+}
+if (!defaults.plugins.legend) {
+  defaults.plugins.legend = {};
+}
+defaults.plugins.legend.position = "bottom";
 
 const EstimatedBudget = ({ data }) => {
-  const [generatedText, setGeneratedText] = useState("");
+ 
+   const [generatedText, setGeneratedText] = useState("");
    const [pieData, setPieData] = useState(null);
 
   useEffect(() => {
     const generateText = () => {
-      const totalBudget = data.EstimatedBudget.totalBudget;
+      const total = data.EstimatedBudget.total;
       const capitalExpenditure = data.EstimatedBudget.capitalExpenditure;
       const recurrentExpenditure = data.EstimatedBudget.recurrentExpenditure;
       const financialExpenditure = data.EstimatedBudget.financialExpenditure;
-      const description = `The Estimated Budget for this fiscal year reflects a total allocation of ${totalBudget} Lakh. 
-      This includes ${capitalExpenditure} (${((capitalExpenditure * 100) / totalBudget).toFixed(2)}%) Lakh designated for Capital Expenditure, aimed at enhancing infrastructure and development projects. 
-      Additionally, ${recurrentExpenditure} (${((recurrentExpenditure * 100) / totalBudget).toFixed(2)}%) Lakh is allocated for Recurrent Expenditure, ensuring the smooth operation of ongoing services and programs. 
-      Finally, ${financialExpenditure} (${((financialExpenditure * 100) / totalBudget).toFixed(2)}%) Lakh is set aside for Financial Expenditure, which supports fiscal management and stability.`;
+      const description = `The Estimated Budget for this fiscal year reflects a total allocation of ${total} Lakh. 
+      This includes ${capitalExpenditure} (${((capitalExpenditure * 100) / total).toFixed(2)}%) Lakh designated for Capital Expenditure, aimed at enhancing infrastructure and development projects. 
+      Additionally, ${recurrentExpenditure} (${((recurrentExpenditure * 100) / total).toFixed(2)}%) Lakh is allocated for Recurrent Expenditure, ensuring the smooth operation of ongoing services and programs. 
+      Finally, ${financialExpenditure} (${((financialExpenditure * 100) / total).toFixed(2)}%) Lakh is set aside for Financial Expenditure, which supports fiscal management and stability.`;
       setGeneratedText(description);
     };
     if (data) {
       const budgetData = Object.entries(data.EstimatedBudget)
-        .filter(([key]) => key !== "totalBudget") // Exclude 'total'
+        .filter(([key]) => key !== "total") // Exclude 'total'
         .map(([key, value]) => ({
           label: key.replace(/([A-Z])/g, " $1").trim(), // Convert camelCase to readable format
           value: value,
@@ -57,7 +66,7 @@ const EstimatedBudget = ({ data }) => {
         <div className="col-span-2 space-y-8">
           <p className="text-lg">
             <strong className="text-blue-600 ">Total Budget:</strong>{" "}
-            {data.EstimatedBudget.totalBudget} Lakh
+            {data.EstimatedBudget.total} Lakh
           </p>
           <p className="text-lg">
             <strong className="text-blue-600 ">Capital Expenditure:</strong>{" "}
