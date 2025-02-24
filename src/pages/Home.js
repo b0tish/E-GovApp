@@ -1,17 +1,17 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Banner from "./Banner";
 import nepalFlag from "../images/nepalFlag.jpg";
+import Banner from "../components/Banner";
 
 function HomePublic() {
   const navigate = useNavigate();
 
   const handleCitizenRedirect = () => {
-    navigate("/home"); // Redirect to home page
+    navigate("/home");
   };
 
   const handleGovernmentLogin = () => {
-    navigate("/login"); // Redirect to login page for government official
+    navigate("/login");
   };
 
   return (

@@ -3,9 +3,11 @@ import { Link, useNavigate } from "react-router-dom";
 import "../css/Navbar.css";
 import logo from "../images/logo.png";
 import { LogoutIcon } from "@heroicons/react/solid";
+import { useAuth } from "./AuthContext";
 
 function Navbar() {
   const navigate = useNavigate();
+  const { user, isLoggedIn, logout } = useAuth();
 
   // Initialize state with sessionStorage if null then set to "Home"
   const [activeTab, setActive] = useState(
@@ -18,13 +20,9 @@ function Navbar() {
   }, [activeTab]);
 
   // Handle logout logic
-  const handleLogout = () => {
-    console.log("Logging out...");
-    sessionStorage.setItem("isLoggedIn", "false");
-    sessionStorage.removeItem("userRole");
-    console.log("Session after logout:", sessionStorage.getItem("isLoggedIn"));
-    setActive("Home");
-    navigate("/"); // Redirect to home page
+  const handleLogout = async () => {
+    await logout;
+    navigate("/");
   };
 
   return (
@@ -38,29 +36,26 @@ function Navbar() {
       <div className="navBar">
         <ul className="flex flex-row font-poppins text-base font-medium text-gray-700 space-x-1 space sm:space-x-6 lg:space-x-16">
           <Link
-            to="/"
+            to="/home"
             onClick={() => setActive("Home")}
-            className={`px-[25px] py-[8px] ${
-              activeTab === "Home" ? "active" : "inactive"
-            }`}
+            className={`px-[25px] py-[8px] ${activeTab === "Home" ? "active" : "inactive"
+              }`}
           >
             <li>Home</li>
           </Link>
           <Link
             to="/contact"
             onClick={() => setActive("Contact")}
-            className={`px-[25px] py-[8px] ${
-              activeTab === "Contact" ? "active" : "inactive"
-            }`}
+            className={`px-[25px] py-[8px] ${activeTab === "Contact" ? "active" : "inactive"
+              }`}
           >
             <li>Contact</li>
           </Link>
           <Link
             to="/about"
             onClick={() => setActive("About")}
-            className={`px-[25px] py-[8px] ${
-              activeTab === "About" ? "active" : "inactive"
-            }`}
+            className={`px-[25px] py-[8px] ${activeTab === "About" ? "active" : "inactive"
+              }`}
           >
             <li>About Us</li>
           </Link>
