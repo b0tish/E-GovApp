@@ -3,7 +3,7 @@ import { Pie } from "react-chartjs-2";
 import { defaults} from "chart.js";
 
 
-defaults.maintainAspectRatio =false;
+
 defaults.responsive=true;
 defaults.plugins.legend.position="bottom"
 
@@ -79,7 +79,7 @@ const EstimatedBudget = ({ data }) => {
             <p>{generatedText}</p>
           </div>
         </div>
-        <div className="col-span-3">
+        <div className="col-span-3 min-h-[400px]">
           {pieData && (
             <Pie
               data={pieData}

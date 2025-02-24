@@ -106,7 +106,7 @@ const CurrentExpenditure = ({ data }) => {
             <p>{generatedText}</p>
           </div>
         </div>
-        <div className="flex flex-col col-span-7">
+        <div className="flex flex-col col-span-7 min-h-[600px]">
           <div className="h-[100%]">
             {" "}
             {pieData && (

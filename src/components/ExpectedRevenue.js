@@ -86,7 +86,7 @@ const ExpectedRevenue = ({ data }) => {
             <p>{generatedText}</p>
           </div>
         </div>
-        <div className="col-span-3 ">
+        <div className="col-span-3 min-h-[400px] ">
           {pieData && (<Pie data={pieData} options={{ plugins: { title: { display: true, text: 'Expected Revenue Breakdown' } } }}/>)}
         </div>
       </div>

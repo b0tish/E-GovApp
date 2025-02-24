@@ -3,35 +3,35 @@ import { useParams, Link } from "react-router-dom";
 import { ArrowLeftIcon } from "@heroicons/react/solid";
 
 const officials = [
-  { name: "Bagmati Province", role: "Province" },
-  { name: "Mahalxmi Municipality", role: "Local" },
-  { name: "Ministry Of Education", role: "Ministry" },
-  { name: "Ministry of Health", role: "Ministry" },
-  { name: "Lalitpur Metropolitian City", role: "Local" },
-  { name: "Kathmandu Metropolitian City", role: "Local" },
-  { name: "Lumbini Province", role: "Province" },
+  { name: "Bagmati Province", level: "Province" },
+  { name: "Mahalxmi Municipality", level: "Local" },
+  { name: "Ministry Of Education", level: "Ministry" },
+  { name: "Ministry of Health", level: "Ministry" },
+  { name: "Lalitpur Metropolitian City", level: "Local" },
+  { name: "Kathmandu Metropolitian City", level: "Local" },
+  { name: "Lumbini Province", level: "Province" },
 ];
 
 function Search() {
-  const { role } = useParams();
+  const { level } = useParams();
 
   const [filteredOfficials, setFilteredOfficials] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    const filteredByRole = officials.filter(
-      (official) => official.role.toLowerCase() === role.toLowerCase()
+    const filteredBylevel = officials.filter(
+      (official) => official.level.toLowerCase() === level.toLowerCase()
     );
 
     if (searchTerm !== "") {
-      const result = filteredByRole.filter((official) =>
+      const result = filteredBylevel.filter((official) =>
         official.name.toLowerCase().includes(searchTerm.trim().toLowerCase())
       );
       setFilteredOfficials(result);
     } else {
-      setFilteredOfficials(filteredByRole);
+      setFilteredOfficials(filteredBylevel);
     }
-  }, [searchTerm, role]);
+  }, [searchTerm, level]);
 
   return (
     <div className="py-8 flex justify-center font-poppins">
@@ -41,13 +41,13 @@ function Search() {
             <ArrowLeftIcon className="h-6 w-6 text-gray-500 mr-2" />
           </Link>
           <h3 className="text-center font-medium font-sans text-lg sm:text-xl md:text-2xl text-gray-500 mx-auto">
-            Select {role}
+            Select {level}
           </h3>
         </div>
 
         <input
           type="text"
-          placeholder={`Search ${role}...`}
+          placeholder={`Search ${level}...`}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           className="border bg-gray-50 border-gray-300 rounded-md p-2 mb-4 w-full text-gray-500 text-base transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-red-500"
@@ -57,7 +57,7 @@ function Search() {
           filteredOfficials.map((official, index) => (
             <Link
               key={index}
-              to={`/${official.role}/${official.name}`}
+              to={`/${official.level}/${official.name}`}
               className="group"
             >
               <div className="border border-gray-300 rounded-md p-3 flex items-center transition duration-300 ease-in-out    group-hover:bg-red-50">

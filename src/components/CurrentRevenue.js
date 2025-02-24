@@ -114,7 +114,7 @@ const CurrentRevenue = ({ data }) => {
           </div>
         </div>
 
-        <div className="col-span-7 flex flex-col">
+        <div className="col-span-7 flex flex-col min-h-[600px]">
           <div className="h-[100%]">
             {" "}
             {pieData && (
