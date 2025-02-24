@@ -6,79 +6,40 @@ import CurrentRevenue from "../components/CurrentRevenue";
 import FiscalYear from "../components/FiscalYear";
 
 
-const dashboardData = [
-  {
-    date: 2080,
-    EstimatedBudget: {
-      totalBudget: 1000000, // in Lakh
-      capitalExpenditure: 400000,
-      recurrentExpenditure: 500000,
-      financialExpenditure: 100000,
-    },
-    ExpectedRevenue: {
-      total: 800000,
-      taxRevenue: 600000,
-      nonTax: 100000,
-      grants: 50000,
-      other: 50000,
-    },
-    CurrentExpenditure: {
-      total: 300000,
-      capitalExpenditure: 100000,
-      recurrentExpenditure: 150000,
-      financialExpenditure: 50000,
-    },
-    CurrentRevenue: {
-      total: 400000,
-      taxRevenue: 300000,
-      nonTax: 50000,
-      grants: 30000,
-      other: 20000,
-    },
-  },
-  {
-    date: 2081,
-    EstimatedBudget: {
-      totalBudget: 1100000,
-      capitalExpenditure: 450000,
-      recurrentExpenditure: 550000,
-      financialExpenditure: 100000,
-    },
-    ExpectedRevenue: {
-      total: 850000,
-      taxRevenue: 650000,
-      nonTax: 100000,
-      grants: 50000,
-      other: 50000,
-    },
-    CurrentExpenditure: {
-      total: 320000,
-      capitalExpenditure: 110000,
-      recurrentExpenditure: 160000,
-      financialExpenditure: 50000,
-    },
-    CurrentRevenue: {
-      total: 420000,
-      taxRevenue: 310000,
-      nonTax: 55000,
-      grants: 30000,
-      other: 25000,
-    },
-  },
-];
-
 const NationalTracking = () => {
+    const [selectedYear, setSelectedYear] = useState(null);
+    const [data, setData] = useState(null);
+    const [dashboardData, setDashboardData] = useState([]);
 
-  const [selectedYear, setSelectedYear] = useState(
-    Math.max(...dashboardData.map((item) => item.date))
-  );  
-  const [data,setData]=useState(null);
+  useEffect(() => {
+    // Fetch dashboard data based on level
+    const fetchDataByLevel = async () => {
+      try {
+        const response = await fetch(`http://localhost:5000/getdatabylevel/National`);
+        if (!response.ok) {
+          throw new Error(`Error fetching data: ${response.statusText}`);
+        }
+        const result = await response.json();
+        setDashboardData(result); // Store fetched data in dashboardData 
+        setSelectedYear(Math.max(...result.map((item) => item.date)));
+       
+      } catch (err) {
+        console.error(err.message);
+      }
+    };
+
+    fetchDataByLevel();
+  }, []);
 
    useEffect(() => {
-    const selectedData = dashboardData.find((item) => item.date === selectedYear);
-    setData(selectedData);
-    
-  }, [selectedYear]);
+     // Set data based on the selected year
+     if (selectedYear !== null) {
+       const selectedData = dashboardData.find(
+         (item) => item.date === selectedYear
+       );
+       setData(selectedData);
+     }
+   }, [selectedYear, dashboardData]);
 
   if (!data) {
     return <div>Loading...</div>;

@@ -2,42 +2,58 @@ import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { ArrowLeftIcon } from "@heroicons/react/solid";
 
-const officials = [
-  { name: "Bagmati Province", level: "Province" },
-  { name: "Mahalxmi Municipality", level: "Local" },
-  { name: "Ministry Of Education", level: "Ministry" },
-  { name: "Ministry of Health", level: "Ministry" },
-  { name: "Lalitpur Metropolitian City", level: "Local" },
-  { name: "Kathmandu Metropolitian City", level: "Local" },
-  { name: "Lumbini Province", level: "Province" },
-];
 
 function Search() {
-  const { level } = useParams();
+  const { level } = useParams()
 
+  const [filteredByLevel, setFilteredByLevel] = useState([]);
   const [filteredOfficials, setFilteredOfficials] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const filteredBylevel = officials.filter(
-      (official) => official.level.toLowerCase() === level.toLowerCase()
-    );
+    const fetchOfficials = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:5000/getlevelnames/${level}`
+        ); // Update the API endpoint as needed
+        if (!response.ok) {
+          throw new Error(`Error fetching officials: ${response.statusText}`);
+        }
+        const data = await response.json();
+        setFilteredByLevel(data.names);
+        setFilteredOfficials(data.names); // Assuming the API returns an array of officials
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchOfficials();
+  }, [level]);
 
+  // Effect to filter officials based on the search term
+  useEffect(() => {
     if (searchTerm !== "") {
-      const result = filteredBylevel.filter((official) =>
-        official.name.toLowerCase().includes(searchTerm.trim().toLowerCase())
+      const result = filteredOfficials.filter((name) =>
+        name.toLowerCase().includes(searchTerm.trim().toLowerCase())
       );
       setFilteredOfficials(result);
     } else {
-      setFilteredOfficials(filteredBylevel);
+      // Fetch officials again if the search term is cleared
+      setFilteredOfficials(filteredByLevel);
     }
-  }, [searchTerm, level]);
+  }, [searchTerm,filteredByLevel, filteredOfficials]);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
 
   return (
     <div className="py-8 flex justify-center font-poppins">
       <div className="grid grid-cols-1 gap-3 w-[80%] sm:w-[75%] lg:w-[50%] bg-white pt-5 pb-20 px-5 rounded-xl sm:px-10 lg:px-20">
         <div className="flex items-center">
-          <Link to="/">
+          <Link to="/home">
             <ArrowLeftIcon className="h-6 w-6 text-gray-500 mr-2" />
           </Link>
           <h3 className="text-center font-medium font-sans text-lg sm:text-xl md:text-2xl text-gray-500 mx-auto">
@@ -57,14 +73,14 @@ function Search() {
           filteredOfficials.map((official, index) => (
             <Link
               key={index}
-              to={`/${official.level}/${official.name}`}
+              to={`/${level}/${official}`}
               className="group"
             >
               <div className="border border-gray-300 rounded-md p-3 flex items-center transition duration-300 ease-in-out    group-hover:bg-red-50">
                 <div className="w-[10%] sm:w-[7%] md:w-[5%] mr-4 flex justify-center">
                   <img alt="emblem" src="/emblem.png" className="w-[100%]" />
                 </div>
-                <p className="text-sm sm:text-base">{official.name}</p>
+                <p className="text-sm sm:text-base">{official}</p>
                 <p className="ml-auto text-gray-500 opacity-50 text-sm">
                   {">"}
                 </p>

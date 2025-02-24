@@ -10,9 +10,16 @@ import {
   getAllLocal,
   updateLocal,
   deleteLocal,
+  
 } from "../controllers/controller.js";
 
-import { register, login, logout } from "../controllers/authController.js";
+import {
+  register,
+  login,
+  logout,
+  getlevelnames,
+} from "../controllers/authController.js";
+import { addbudget,getDataByLevel,getDataByName} from "../controllers/budgetController.js";
 
 const router = express.Router();
 
@@ -30,6 +37,10 @@ router.delete("/province/:provinceId/local/localId", deleteLocal);
 router.post("/register", register);
 router.post("/login", login);
 router.post("/logout", logout);
+router.get("/getlevelnames/:level",getlevelnames);
+router.post("/addbudget", addbudget);
+router.get("/getdatabylevel/:level", getDataByLevel);
+router.get("/getdatabyname/:name", getDataByName);
 
 //Protected Routes
 router.post("/province", verifyToken, authorizeRole("admin"), addProvince);
