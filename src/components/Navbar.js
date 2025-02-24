@@ -21,7 +21,7 @@ function Navbar() {
 
   // Handle logout logic
   const handleLogout = async () => {
-    await logout;
+    await logout();
     navigate("/");
   };
 

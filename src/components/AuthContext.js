@@ -66,7 +66,7 @@ export const AuthProvider = ({ children }) => {
   const value = {
     user,
     isLoggedIn,
-    isLoading,
+    isLoading, // Expose loading state
     login,
     logout,
   };
