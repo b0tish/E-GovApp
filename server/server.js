@@ -3,17 +3,26 @@ import cors from "cors";
 import { conn } from "./config/dbconnection.js";
 import { router } from "./routes/routes.js";
 import * as dotenv from "dotenv";
+import cookieParser from "cookie-parser";
 
 dotenv.config();
 
 const app = express();
-
-conn();
-
-app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
 
-app.use("/", router);
+conn().then(() => {
+  console.log("Connected to MongoDB");
+
+  app.use(
+    cors({
+      origin: "http://localhost:3000",
+      credentials: true,
+    }),
+  );
+
+  app.use("/", router);
+});
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

@@ -8,6 +8,18 @@ import Dashboard from "./pages/Dashboard";
 import Tracking from "./pages/Tracking";
 import { BrowserRouter, Routes, Route } from "react-router";
 import "./App.css";
+import ProvinceAllocationForm from "./components/ProvinceAllocationForm";
+import MinistryAllocationForm from "./components/MinistryAllocationForm";
+import LocalGovernmentAllocationForm from "./components/LocalGovernmentAllocationForm";
+import PageNotFound from "./components/PageNotFound";
+// import Allocations from "./components/Allocations";
+import LocalList from "./components/LocalList";
+import Allocations from "./components/Allocations";
+import HomePublic from "./components/HomePublic";
+import ProtectedRoute from "./components/ProtectedRoute";
+import HomePrivate from "./components/HomePrivate";
+import Register from "./components/Register";
+import { AuthProvider } from "./components/AuthContext";
 import ProvinceAllocationForm from "./pages/ProvinceAllocationForm";
 import MinistryAllocationForm from "./pages/MinistryAllocationForm";
 import LocalGovernmentAllocationForm from "./pages/LocalGovernmentAllocationForm";
@@ -24,36 +36,47 @@ import Test from "./pages/Test";
 function App() {
   return (
     <>
-      <BrowserRouter>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/tracking" element={<Tracking />} />
-          <Route path="/province/:provinceId/locals" element={<LocalList />} />
-          <Route path="/allocation">
-            <Route index element={<PageNotFound />} />
+      <AuthProvider>
+        <BrowserRouter>
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/home" element={<HomePublic />} />
+            <Route element={<ProtectedRoute requiredRole="admin" />}>
+              <Route path="/admin-home" element={<HomePrivate />} />
+            </Route>
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/tracking" element={<Tracking />} />
             <Route
-              path="localgovernment"
-              element={<LocalGovernmentAllocationForm />}
+              path="/province/:provinceId/locals"
+              element={<LocalList />}
             />
-            <Route path="province" element={<ProvinceAllocationForm />} />
-            <Route path="ministry" element={<MinistryAllocationForm />} />
-          </Route>
+            <Route path="/allocation">
+              <Route index element={<PageNotFound />} />
+              <Route
+                path="localgovernment"
+                element={<LocalGovernmentAllocationForm />}
+              />
+              <Route path="province" element={<ProvinceAllocationForm />} />
+              <Route path="ministry" element={<MinistryAllocationForm />} />
+            </Route>
 
-          <Route path="/allocations" element={<Allocations />} />
-          <Route path="*" element={<PageNotFound />} />
-          <Route path="/:role" element={<Search />} />
-          <Route path="/national" element={<NationalTracking/>}></Route>
-          <Route path="/ministry/:mName" element={<MinistryTracking />} />
-          <Route path="/province/:pName" element={<ProvincialTracking />} />
-          <Route path="/local/:lName" element={<LocalTracking />} />
-          <Route path="/test" element={<Test/>}></Route>
-        </Routes>
-      </BrowserRouter>
+            <Route path="/allocations" element={<Allocations />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/allocations" element={<Allocations />} />
+            <Route path="*" element={<PageNotFound />} />
+            <Route path="/:role" element={<Search />} />
+            <Route path="/national" element={<NationalTracking />}></Route>
+            <Route path="/ministry/:mName" element={<MinistryTracking />} />
+            <Route path="/province/:pName" element={<ProvincialTracking />} />
+            <Route path="/local/:lName" element={<LocalTracking />} />
+            <Route path="/test" element={<Test />}></Route>
+          </Routes >
+        </BrowserRouter >
+      </AuthProvider >
     </>
   );
 }

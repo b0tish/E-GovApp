@@ -7,7 +7,6 @@ import "../css/Tracking.css";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-
 const data = {
   labels: ["A", "B", "C", "D"],
   datasets: [

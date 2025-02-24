@@ -7,8 +7,8 @@ const addProvince = async (req, res) => {
     await province.save();
     res.status(201).json(province);
   } catch (error) {
-    console.error("Error adding province:", error); // Log the error
-    console.error("Mongoose validation errors:", error.errors); // Log Mongoose validation errors
+    console.error("Error adding province:", error);
+    console.error("Mongoose validation errors:", error.errors);
     res.status(400).json({ error: error.message });
   }
 };
@@ -41,8 +41,8 @@ const updateProvince = async (req, res) => {
 
 const deleteProvince = async (req, res) => {
   try {
-    const { id } = req.params;
-    await Province.findByIdAndDelete("67a653b51eaf7e238fcd6bf3");
+    const { provinceId } = req.params;
+    await Province.findByIdAndDelete(provinceId);
     res.status(201).json({ message: "Province is deleted" });
   } catch (error) {
     res.status(500).json({ error: error.message });

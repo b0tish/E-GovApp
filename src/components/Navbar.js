@@ -7,11 +7,9 @@ import { LogoutIcon } from "@heroicons/react/solid";
 function Navbar() {
   const navigate = useNavigate();
 
- 
-
   // Initialize state with sessionStorage if null then set to "Home"
   const [activeTab, setActive] = useState(
-    sessionStorage.getItem("activeTab") || "Home"
+    sessionStorage.getItem("activeTab") || "Home",
   );
 
   // Whenever activeTab changes, update sessionStorage
@@ -20,14 +18,14 @@ function Navbar() {
   }, [activeTab]);
 
   // Handle logout logic
-   const handleLogout = () => {
-     console.log("Logging out...");
-     sessionStorage.setItem("isLoggedIn", "false");
-     sessionStorage.removeItem("userRole");
-     console.log("Session after logout:", sessionStorage.getItem("isLoggedIn"));
-     setActive("Home");
-     navigate("/"); // Redirect to home page
-   };
+  const handleLogout = () => {
+    console.log("Logging out...");
+    sessionStorage.setItem("isLoggedIn", "false");
+    sessionStorage.removeItem("userRole");
+    console.log("Session after logout:", sessionStorage.getItem("isLoggedIn"));
+    setActive("Home");
+    navigate("/"); // Redirect to home page
+  };
 
   return (
     <nav className="flex justify-between px-10 py-3 border-b-2 border-gray-100 items-center shadow-sm bg-white sticky top-0 z-50">

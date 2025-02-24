@@ -5,10 +5,9 @@ import { Link } from "react-router-dom";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-function ProvinceList({ provinces, setProvinces }) {
+function ProvinceList({ provinces, setProvinces, onEdit }) {
   const handleProvinceDelete = async (provinceId) => {
     try {
-      console.log("This is the province list id:", provinceId);
       const response = await fetch(
         `http://localhost:5000/province/${provinceId}`,
         {
@@ -21,7 +20,7 @@ function ProvinceList({ provinces, setProvinces }) {
           prevProvinces.filter((province) => province._id !== provinceId),
         );
       } else {
-        console.error("Error deleting province: ", response.status);
+        console.log("Error in this line here");
       }
     } catch (error) {
       console.error("Error");
@@ -29,7 +28,6 @@ function ProvinceList({ provinces, setProvinces }) {
   };
 
   const handleProvinceUpdate = async (provinceId) => {
-    console.log(provinceId);
     try {
       const response = await fetch(
         `http://localhost:5000/province/${provinceId}`,
