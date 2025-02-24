@@ -8,18 +8,6 @@ import Dashboard from "./pages/Dashboard";
 import Tracking from "./pages/Tracking";
 import { BrowserRouter, Routes, Route } from "react-router";
 import "./App.css";
-import ProvinceAllocationForm from "./components/ProvinceAllocationForm";
-import MinistryAllocationForm from "./components/MinistryAllocationForm";
-import LocalGovernmentAllocationForm from "./components/LocalGovernmentAllocationForm";
-import PageNotFound from "./components/PageNotFound";
-// import Allocations from "./components/Allocations";
-import LocalList from "./components/LocalList";
-import Allocations from "./components/Allocations";
-import HomePublic from "./components/HomePublic";
-import ProtectedRoute from "./components/ProtectedRoute";
-import HomePrivate from "./components/HomePrivate";
-import Register from "./components/Register";
-import { AuthProvider } from "./components/AuthContext";
 import ProvinceAllocationForm from "./pages/ProvinceAllocationForm";
 import MinistryAllocationForm from "./pages/MinistryAllocationForm";
 import LocalGovernmentAllocationForm from "./pages/LocalGovernmentAllocationForm";
@@ -32,6 +20,11 @@ import ProvincialTracking from "./pages/ProvincialTracking";
 import LocalTracking from "./pages/LocalTracking";
 import NationalTracking from "./pages/NationalTracking";
 import Test from "./pages/Test";
+import { AuthProvider } from "./components/AuthContext";
+import HomePublic from "./pages/HomePublic";
+import ProtectedRoute from "./components/ProtectedRoute";
+import HomePrivate from "./pages/HomePrivate";
+import Register from "./pages/Register";
 
 function App() {
   return (
@@ -41,10 +34,8 @@ function App() {
           <Navbar />
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/home" element={<HomePublic />} />
-            <Route element={<ProtectedRoute requiredRole="admin" />}>
-              <Route path="/admin-home" element={<HomePrivate />} />
-            </Route>
+            <Route path="/home" element={<HomePrivate />} />
+
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/login" element={<Login />} />
@@ -63,7 +54,6 @@ function App() {
               <Route path="province" element={<ProvinceAllocationForm />} />
               <Route path="ministry" element={<MinistryAllocationForm />} />
             </Route>
-
             <Route path="/allocations" element={<Allocations />} />
             <Route path="/register" element={<Register />} />
             <Route path="/allocations" element={<Allocations />} />
@@ -74,9 +64,9 @@ function App() {
             <Route path="/province/:pName" element={<ProvincialTracking />} />
             <Route path="/local/:lName" element={<LocalTracking />} />
             <Route path="/test" element={<Test />}></Route>
-          </Routes >
-        </BrowserRouter >
-      </AuthProvider >
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
     </>
   );
 }

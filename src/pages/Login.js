@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function Login({ isLoggedIn, setIsLoggedIn }) {
+function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -20,12 +20,7 @@ function Login({ isLoggedIn, setIsLoggedIn }) {
       const data = await response.json();
       if (data.success) {
         console.log("Login successful:", data);
-
-        if (data.role === "admin") {
-          navigate("/admin-home");
-        } else {
-          navigate("/home");
-        }
+        navigate("/home");
       } else {
         setError(data.msg);
       }

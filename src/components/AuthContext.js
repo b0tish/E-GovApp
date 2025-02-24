@@ -5,11 +5,11 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isLoading, setIsLoading] = useState(true); // Add loading state
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const checkAuthentication = async () => {
-      setIsLoading(true); // Set loading to true while checking
+      setIsLoading(true);
       try {
         const response = await fetch("http://localhost:5000/auth-check", {
           credentials: "include",
@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }) => {
         setUser(null);
         setIsLoggedIn(false);
       } finally {
-        setIsLoading(false); // Set loading to false after checking
+        setIsLoading(false);
       }
     };
 
@@ -66,7 +66,7 @@ export const AuthProvider = ({ children }) => {
   const value = {
     user,
     isLoggedIn,
-    isLoading, // Expose loading state
+    isLoading,
     login,
     logout,
   };
