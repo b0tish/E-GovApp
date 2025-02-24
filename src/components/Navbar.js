@@ -28,7 +28,7 @@ function Navbar() {
   };
 
   return (
-    <nav className="flex justify-between px-10 py-3 border-b-2 border-gray-100 items-center shadow-sm">
+    <nav className="flex justify-between px-10 py-3 border-b-2 border-gray-100 items-center shadow-sm bg-white sticky top-0 z-50">
       <div className="logo flex flex-row space-x-2 items-center">
         <img src={logo} alt="logo" className="h-10" />
         <span className="hidden font-kalam font-bold text-sm sm:contents">
@@ -36,7 +36,7 @@ function Navbar() {
         </span>
       </div>
       <div className="navBar">
-        <ul className="flex flex-row font-concert text-base font-medium text-gray-700 space-x-1 space sm:space-x-6 lg:space-x-16">
+        <ul className="flex flex-row font-poppins text-base font-medium text-gray-700 space-x-1 space sm:space-x-6 lg:space-x-16">
           <Link
             to="/"
             onClick={() => setActive("Home")}

@@ -1,6 +1,7 @@
 import React from "react";
-import Card from "./Card";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Banner from "../components/Banner";
+import nepalFlag from "../images/nepalFlag.jpg";
 
 function HomePublic() {
   return (

@@ -2,7 +2,7 @@ import React from "react";
 
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
-import { CardContent, Card } from "./ui/card";
+import { CardContent, Card } from "../components/ui/card";
 import "../css/Tracking.css";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -11,7 +11,7 @@ const data = {
   labels: ["A", "B", "C", "D"],
   datasets: [
     {
-      data: [400, 300, 300, 200],
+      data: [400, 300, 300, 200,],
       backgroundColor: [
         "rgba(255, 99, 132, 0.8)",
         "rgba(54, 162, 235, 0.8)",

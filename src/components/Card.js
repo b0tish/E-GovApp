@@ -1,11 +1,30 @@
 import React from "react";
-import { ChartBarIcon } from "@heroicons/react/solid";
 
-function Card(props) {
+function Card({ title,imageSrc }) {
   return (
-    <div className="w-60 h-64 mb-10 bg-red-500 flex items-center justify-center p-4 basis-96">
-      <ChartBarIcon className="h-10 w-10 text-blue-500"/>
-      {props.title}
+    <div
+      className="
+      bg-white
+      rounded-lg
+      shadow-xl
+      p-4
+      flex
+      flex-col
+      items-center
+      justify-center
+      transform
+      transition
+      duration-300
+      hover:scale-105
+      h-52
+    "
+    >
+      <img
+        src={imageSrc} // Use the imageSrc prop
+        alt="Icon"
+        className="w-[30%] mb-[20px]"
+      />
+      <p className="text-center text-gray-700 font-medium">{title}</p>
     </div>
   );
 }
