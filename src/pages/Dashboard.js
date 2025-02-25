@@ -4,32 +4,40 @@ import ExpectedRevenue from "../components/ExpectedRevenue";
 import CurrentExpenditure from "../components/CurrentExpenditure";
 import CurrentRevenue from "../components/CurrentRevenue";
 import FiscalYear from "../components/FiscalYear";
-import { useParams } from "react-router";
+import { useParams, useNavigate } from "react-router";
 
 const Dashboard = () => {
   const [selectedYear, setSelectedYear] = useState(null);
   const [data, setData] = useState(null);
   const [dashboardData, setDashboardData] = useState([]);
-  const {level,name} = useParams();
-  
+  const { level, name } = useParams();
+  const navigate= useNavigate();
 
   useEffect(() => {
-   
     // Fetch dashboard data based on level
     const fetchDataByName = async () => {
       try {
         let response;
-        if(level!=="National")
-        {
-           response = await fetch(
-             `http://localhost:5000/getdatabyname/${name}`
-           );     
+        if (level !== "National") {
+          response = await fetch(
+            `http://localhost:5000/dashboardrequestbyname/${name}`,
+            {
+              credentials: "include",
+            }
+          );
+        } else {
+          response = await fetch(
+            `http://localhost:5000/dashboardrequestbylevel/National`,
+            {
+              credentials: "include",
+            }
+          );
         }
-        else{
-          response = await fetch(`http://localhost:5000/getdatabylevel/National`); 
+        if (response.status === 403 || response.status===401) {
+          navigate("/forbidden"); // Navigate to /forbidden if status is 403
+          return; // Exit the function early
         }
 
-       
         if (!response.ok) {
           throw new Error(`Error fetching data: ${response.statusText}`);
         }
@@ -42,7 +50,7 @@ const Dashboard = () => {
     };
 
     fetchDataByName();
-  }, [name,level]);
+  }, [name,level,navigate]);
 
   useEffect(() => {
     // Set data based on the selected year
@@ -53,26 +61,26 @@ const Dashboard = () => {
       setData(selectedData);
     }
   }, [selectedYear, dashboardData]);
- 
 
-   return (
+  return (
     <div className="container mx-auto pb-10 px-4 lg:!px-16 font-poppins ">
       <div className="text-center flex flex-col items-center">
         <div className="emblem w-[15%] md:w-[8%] mb-2">
           <img src="/emblem.png" alt="emblem" className="w-[100%]"></img>
         </div>
         <h2 className="text-base md:text-2xl font-bold mb-4">
-          Welcome to the {level!=="National"?`${name}`:"National"} Financial Dashboard
+          Welcome to the {level !== "National" ? `${name}` : "National"}{" "}
+          Financial Dashboard
         </h2>
       </div>
 
       <FiscalYear
         dashboardData={dashboardData}
         selectedYear={selectedYear}
-        setSelectedYear={setSelectedYear}   
-        data={data || {level:level, name:name||null}} // Pass an empty object if data is null
+        setSelectedYear={setSelectedYear}
+        data={data || { level: level, name: name || null }} // Pass an empty object if data is null
       />
-      
+
       {data ? (
         <>
           <EstimatedBudget data={data} />
@@ -81,10 +89,12 @@ const Dashboard = () => {
           <CurrentRevenue data={data} />
         </>
       ) : (
-        <p>{dashboardData.length === 0 ? "No data available." : "Loading..."}</p>
+        <p>
+          {dashboardData.length === 0 ? "No data available." : "Loading..."}
+        </p>
       )}
     </div>
-   );
-  }
+  );
+};
 
 export default Dashboard;

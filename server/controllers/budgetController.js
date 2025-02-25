@@ -53,10 +53,10 @@ const addbudget = async (req, res) => {
 };
 
 const getDataByLevel = async (req, res) => {
-  const { level} = req.params; // Get level and year from request parameters
+  const { identifier} = req.params; // Get level and year from request parameters
   try {
     // Fetch the budget data matching the level and year
-    const data = await BudgetSchema.find({ level});
+    const data = await BudgetSchema.find({ level : identifier});
 
     if (!data) {
       return res
@@ -73,10 +73,10 @@ const getDataByLevel = async (req, res) => {
 };
 
 const getDataByName = async (req, res) => {
-  const { name } = req.params; // Get level and year from request parameters
+  const { identifier } = req.params; // Get level and year from request parameters
   try {
     // Fetch the budget data matching the level and year
-    const formattedName=  name.charAt(0).toUpperCase() + name.slice(1);
+    const formattedName=  identifier.charAt(0).toUpperCase() + identifier.slice(1);
     const data = await BudgetSchema.find({ name:formattedName });
 
     if (!data) {
@@ -93,4 +93,30 @@ const getDataByName = async (req, res) => {
   }
 };
 
-export{addbudget,getDataByLevel,getDataByName};
+
+const updateBudgetById = async (req, res) => {
+  const { id } = req.params; // Get the ID from the request parameters
+  const updatedData = req.body; // Get the updated data from the request body
+
+  try {
+    // Find the budget by ID and update it
+    const updatedBudget = await BudgetSchema.findByIdAndUpdate(id, updatedData, {
+      new: true, // Return the updated document
+      runValidators: true, // Validate the update
+    });
+
+    if (!updatedBudget) {
+      return res.status(404).json({ message: "Budget not found" });
+    }
+
+    return res.status(200).json({
+      message: "Budget updated successfully",
+      budget: updatedBudget,
+    });
+  } catch (error) {
+    console.error("Error updating budget:", error);
+    return res.status(500).json({ message: "Internal server error", error });
+  }
+};
+
+export{addbudget,getDataByLevel,getDataByName,updateBudgetById};

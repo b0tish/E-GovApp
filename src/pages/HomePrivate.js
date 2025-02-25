@@ -1,18 +1,26 @@
-import React from "react";
+import React,{useEffect,useState} from "react";
 import Card from "../components/Card";
 import { Link } from "react-router-dom";
 import { useAuth } from "../components/AuthContext";
 
 function HomePrivate() {
-  const { isLoggedIn } = useAuth(); // Directly use isLoggedIn from context
-  console.log(isLoggedIn);
-  const level = "Province";
-  const name = "Lumbini";
+  const { isLoggedIn,user } = useAuth(); // Directly use isLoggedIn from context
+
+  const [name, setName] = useState(user?.name);
+  const [level, setLevel] = useState(user?.level);
+
+  useEffect(() => {
+    // Set name and level when user is available
+    if (user) {
+      setName(user.name);
+      setLevel(user.level);
+    }
+  }, [user]);
 
   return (
     <div className="p-20">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {isLoggedIn && ( // Check isLoggedIn directly
+        {isLoggedIn && user &&( // Check isLoggedIn directly
           <Link to={`/dashboard/${level}/${name}`}>
             <Card title="Your Dashboard" imageSrc="/dashboard.jpg" />
           </Link>

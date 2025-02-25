@@ -1,5 +1,5 @@
 import express from "express";
-import { verifyToken, authorizeRole } from "../controllers/authMiddleware.js";
+import { verifyToken, authorizeRole,authorizeDashboard } from "../controllers/authMiddleware.js";
 
 import {
   addProvince,
@@ -19,7 +19,7 @@ import {
   logout,
   getlevelnames,
 } from "../controllers/authController.js";
-import { addbudget,getDataByLevel,getDataByName} from "../controllers/budgetController.js";
+import { addbudget,getDataByLevel,getDataByName,updateBudgetById} from "../controllers/budgetController.js";
 
 const router = express.Router();
 
@@ -39,9 +39,23 @@ router.post("/login", login);
 router.post("/logout", logout);
 router.get("/getlevelnames/:level",getlevelnames);
 router.post("/addbudget", addbudget);
-router.get("/getdatabylevel/:level", getDataByLevel);
-router.get("/getdatabyname/:name", getDataByName);
+router.get("/getdatabylevel/:identifier", getDataByLevel);
+router.get("/getdatabyname/:identifier", getDataByName);
+router.put('/updatebudget/:id', updateBudgetById);
 
 //Protected Routes
+//Protected Routes
+router.get(
+  "/dashboardrequestbyname/:identifier",
+  verifyToken,
+  authorizeDashboard(), // Use the new custom middleware here
+  getDataByName
+);
+router.get(
+  "/dashboardrequestbylevel/:identifier",
+  verifyToken,
+  authorizeDashboard(), // Use the new custom middleware here
+  getDataByLevel
+);
 router.post("/province", verifyToken, authorizeRole("admin"), addProvince);
 export { router };

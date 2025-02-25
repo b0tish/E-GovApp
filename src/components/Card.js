@@ -17,6 +17,7 @@ function Card({ title,imageSrc }) {
       duration-300
       hover:scale-105
       h-52
+      hover:!bg-red-100
     "
     >
       <img
