@@ -25,6 +25,7 @@ import { AuthProvider } from "./components/AuthContext";
 import HomePrivate from "./pages/HomePrivate";
 import Register from "./pages/Register";
 import Testy from "./pages/testy";
+import Forbidden from "./pages/Forbidden";
 
 function App() {
   return (
@@ -65,6 +66,7 @@ function App() {
             <Route path="/province/:pName" element={<ProvincialTracking />} />
             <Route path="/local/:lName" element={<LocalTracking />} />
             <Route path="/testy" element={<Testy />}></Route>
+            <Route path="/forbidden" element={<Forbidden/>}></Route>
           </Routes>
         </BrowserRouter>
       </AuthProvider>

@@ -22,7 +22,7 @@ function Login() {
       const data = await response.json();
       if (data.success) {
         console.log("Login successful:", data);
-        login();
+        login(data.user);
         navigate("/home");
       } else {
         setError(data.msg);

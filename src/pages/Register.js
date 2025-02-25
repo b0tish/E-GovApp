@@ -5,10 +5,12 @@ function Register() {
   const [password, setPassword] = useState("");
   const [name, setName] = useState(""); // Added state for name
   const [level, setLevel] = useState("National"); // Added state for level
+  const [contactNumber, setcontactNumber] = useState(""); // Added state for level
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [nameError, setNameError] = useState(""); // Added state for name error
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
+  const [contactNumberError, setcontactNumberError] = useState(""); // Added state for name error
   const [errorMessage, setErrorMessage] = useState("");
   const [role, setRole] = useState("user");
 
@@ -37,6 +39,11 @@ function Register() {
     } else {
       setNameError("");
     }
+    if(!contactNumber){
+      setcontactNumberError("Phone number is required");
+    }else{
+      setcontactNumberError("");
+    }
 
     if (!isValid) {
       return;
@@ -48,7 +55,7 @@ function Register() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password, role, name, level }), // Include name and level
+        body: JSON.stringify({ email, password,contactNumber, role, name, level }), // Include name and level
       });
 
       if (response.ok) {
@@ -101,6 +108,18 @@ function Register() {
               required
             />
             <div className="error-message">{passwordError}</div>
+          </div>
+          <div className="form-group">
+            <label htmlFor="contactNumber">Contact Number:</label>
+            <input
+              type="number"
+              id="contactNumber"
+              name="cotanctNumber"
+              value={contactNumber}
+              onChange={(e) => setcontactNumber(e.target.value)}
+              required
+            />
+            <div className="error-message">{contactNumberError}</div>
           </div>
           <div className="form-group">
             <label htmlFor="level">Level:</label>

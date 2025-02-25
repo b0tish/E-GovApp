@@ -3,14 +3,14 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
 const generateToken = (user) => {
-  return jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, {
+  return jwt.sign({ id: user._id, role: user.role ,name:user.name,level:user.level}, process.env.JWT_SECRET, {
     expiresIn: "1h",
   });
 };
 
 const register = async (req, res) => {
   try {
-    const { email, password, role, name, level } = req.body;
+    const { email, password, contactNumber, role, name, level } = req.body;
 
     const existingUser = await User.findOne({ email });
 
@@ -31,12 +31,13 @@ const register = async (req, res) => {
     const user = new User({
       email,
       password: hashedPassword,
+      contactNumber,
       role,
       name: level !== "National" ? name : undefined, // Set name only if level is not National
       level, // Add level to the user document
     });
     await user.save();
-
+    console.log(user);
     res.status(201).json({ message: "User registered successfully" });
   } catch (error) {
     console.error("Error registering user:", error);
@@ -75,7 +76,7 @@ export const login = async (req, res) => {
         sameSite: "Strict",
         maxAge: 60 * 60 * 1000,
       })
-      .json({ success: true, msg: "Login successful", role: user.role });
+      .json({ success: true, msg: "Login successful", user:user });
   } catch (err) {
     console.error("Login Error:", err);
     res.status(500).json({ success: false, error: err.message });

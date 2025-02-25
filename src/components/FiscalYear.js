@@ -4,15 +4,25 @@ import Modal from "./Modal";
 
 const FiscalYear = ({ dashboardData, selectedYear, setSelectedYear, data }) => {
   const [isOpen, setIsOpen] = useState(false); // Modal state
+  const [isUpdate, setisUpdate] = useState(false); // Modal state
+
   const location = useLocation(); // Get the current location
   const isDashboard = location.pathname.startsWith("/dashboard/"); // Check if the path starts with '/dashboard/'
 
   const handleStartNewYear = () => {
     setIsOpen(true); // Open the modal
+    setisUpdate(false);
+
   };
 
   const closeModal = () => {
     setIsOpen(false); // Close the modal
+    setisUpdate(false);
+  };
+
+  const handleUpdateData = () => {
+    setisUpdate(true);
+    setIsOpen(true);
   };
 
   return (
@@ -39,8 +49,24 @@ const FiscalYear = ({ dashboardData, selectedYear, setSelectedYear, data }) => {
         </select>
       </div>
 
-      {isDashboard && ( // Check if the path is a dashboard path
+      {isDashboard && (  // Check if the path is a dashboard path
         <>
+        {data.date && (
+          <div className="text-center flex flex-col items-center justify-center mb-4 text-base">
+            <label className="font-semibold" htmlFor="newYear">
+              Update Data:
+            </label>
+            <button
+              onClick={handleUpdateData}
+              value="Start"
+              className="mt-2 py-2 px-4 rounded-lg bg-white border-2 border-black hover:ring-2 hover:ring-black hover:!bg-red-100 transition duration-300 ease-in-out"
+              id="newYear"
+            >
+              Update
+            </button>
+          </div>
+      )}
+
           <div className="text-center flex flex-col items-center justify-center mb-4 text-base">
             <label className="font-semibold" htmlFor="newYear">
               Start New Fiscal Year:
@@ -56,6 +82,7 @@ const FiscalYear = ({ dashboardData, selectedYear, setSelectedYear, data }) => {
           </div>
 
           <Modal
+            isUpdate={isUpdate}
             isOpen={isOpen}
             closeModal={closeModal}
             data={data}
