@@ -1,16 +1,15 @@
-import React,{useEffect,useState} from "react";
+import React, { useEffect, useState } from "react";
 import Card from "../components/Card";
 import { Link } from "react-router-dom";
 import { useAuth } from "../components/AuthContext";
 
 function HomePrivate() {
-  const { isLoggedIn,user } = useAuth(); // Directly use isLoggedIn from context
-
+  const { isLoggedIn, user } = useAuth(); // Directly use isLoggedIn from context
+  console.log(isLoggedIn);
   const [name, setName] = useState(user?.name);
   const [level, setLevel] = useState(user?.level);
 
   useEffect(() => {
-    // Set name and level when user is available
     if (user) {
       setName(user.name);
       setLevel(user.level);
@@ -20,11 +19,12 @@ function HomePrivate() {
   return (
     <div className="p-20">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {isLoggedIn && user &&( // Check isLoggedIn directly
-          <Link to={`/dashboard/${level}/${name}`}>
-            <Card title="Your Dashboard" imageSrc="/dashboard.jpg" />
-          </Link>
-        )}
+        {isLoggedIn &&
+          user && ( // Check isLoggedIn directly
+            <Link to={`/dashboard/${level}/${name}`}>
+              <Card title="Your Dashboard" imageSrc="/dashboard.jpg" />
+            </Link>
+          )}
         <Link to="/national">
           <Card title="National Level Tracking" imageSrc="./emblem.png" />
         </Link>

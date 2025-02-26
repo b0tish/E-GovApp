@@ -19,9 +19,8 @@ import MinistryTracking from "./pages/MinistryTracking";
 import ProvincialTracking from "./pages/ProvincialTracking";
 import LocalTracking from "./pages/LocalTracking";
 import NationalTracking from "./pages/NationalTracking";
-
+import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProvider } from "./components/AuthContext";
-
 import HomePrivate from "./pages/HomePrivate";
 import Register from "./pages/Register";
 import Testy from "./pages/testy";
@@ -57,7 +56,14 @@ function App() {
               <Route path="ministry" element={<MinistryAllocationForm />} />
             </Route>
             <Route path="/allocations" element={<Allocations />} />
-            <Route path="/register" element={<Register />} />
+            <Route
+              path="/register"
+              element={
+                <ProtectedRoute requiredRole="superadmin">
+                  <Register />
+                </ProtectedRoute>
+              }
+            />
             <Route path="/allocations" element={<Allocations />} />
             <Route path="/search/:level" element={<Search />} />
 
@@ -66,7 +72,7 @@ function App() {
             <Route path="/province/:pName" element={<ProvincialTracking />} />
             <Route path="/local/:lName" element={<LocalTracking />} />
             <Route path="/testy" element={<Testy />}></Route>
-            <Route path="/forbidden" element={<Forbidden/>}></Route>
+            <Route path="/forbidden" element={<Forbidden />}></Route>
           </Routes>
         </BrowserRouter>
       </AuthProvider>

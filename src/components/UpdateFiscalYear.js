@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 
 const UpdateFiscalYear = ({ closeModal, setIsConfirmed, data }) => {
-  const budgetId = data._id; 
+  const budgetId = data._id;
   const [formData, setFormData] = useState({
+    role: data.role || "",
     level: data.level || "National",
     name: data.name || "",
     date: data.date || "",
@@ -49,7 +50,7 @@ const UpdateFiscalYear = ({ closeModal, setIsConfirmed, data }) => {
     return {
       total: Object.values(rest).reduce(
         (acc, val) => acc + Number(val || 0),
-        0
+        0,
       ),
       ...rest,
     };
@@ -75,29 +76,29 @@ const UpdateFiscalYear = ({ closeModal, setIsConfirmed, data }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-   try {
-     const response = await fetch(
-       `http://localhost:5000/updatebudget/${budgetId}`,
-       {
-         // Include budgetId in URL
-         method: "PUT", // Change to PUT for updating
-         headers: {
-           "Content-Type": "application/json",
-         },
-         body: JSON.stringify(formData),
-       }
-     );
+    try {
+      const response = await fetch(
+        `http://localhost:5000/updatebudget/${budgetId}`,
+        {
+          // Include budgetId in URL
+          method: "PUT", // Change to PUT for updating
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        },
+      );
 
-     if (!response.ok) {
-       throw new Error(`HTTP error! status: ${response.status}`);
-     }
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
 
-     const result = await response.json();
-     alert("Budget updated successfully: " + result.message);
-     closeModal();
-   } catch (error) {
-     console.error("Error submitting form", error);
-   }
+      const result = await response.json();
+      alert("Budget updated successfully: " + result.message);
+      closeModal();
+    } catch (error) {
+      console.error("Error submitting form", error);
+    }
   };
 
   return (

@@ -39,9 +39,9 @@ function Register() {
     } else {
       setNameError("");
     }
-    if(!contactNumber){
+    if (!contactNumber) {
       setcontactNumberError("Phone number is required");
-    }else{
+    } else {
       setcontactNumberError("");
     }
 
@@ -55,7 +55,7 @@ function Register() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password,contactNumber, role, name, level }), // Include name and level
+        body: JSON.stringify({ email, password, contactNumber, role, name, level }),
       });
 
       if (response.ok) {

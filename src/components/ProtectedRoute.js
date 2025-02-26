@@ -1,8 +1,9 @@
 import React from "react";
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { useAuth } from "./AuthContext";
+import forbidden from "../pages/Forbidden";
 
-function ProtectedRoute({ requiredRole }) {
+function ProtectedRoute({ requiredRole, children }) {
   const { user, isLoggedIn, isLoading } = useAuth();
 
   if (isLoading) {
@@ -13,11 +14,11 @@ function ProtectedRoute({ requiredRole }) {
     return <Navigate to="/login" />;
   }
 
-  if (requiredRole && user?.role !== requiredRole) {
-    return <Navigate to="/" />;
+  if (requiredRole && user.role !== requiredRole) {
+    return <Navigate to="/forbidden" />;
   }
 
-  return <Outlet />;
+  return children;
 }
 
 export default ProtectedRoute;
