@@ -25,6 +25,8 @@ import HomePrivate from "./pages/HomePrivate";
 import Register from "./pages/Register";
 import Testy from "./pages/testy";
 import Forbidden from "./pages/Forbidden";
+import ContactSearch from "./pages/ContactSearch";
+import NationalContact from "./pages/NationalContact";
 
 function App() {
   return (
@@ -38,6 +40,8 @@ function App() {
 
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/contact/national" element={<NationalContact/>}/>
+            <Route path="/contact/:identifier" element={<ContactSearch/>}/>
             <Route path="/login" element={<Login />} />
             <Route path="/dashboard/:level" element={<Dashboard />} />
             <Route path="/dashboard/:level/:name" element={<Dashboard />} />
