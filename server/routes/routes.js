@@ -11,6 +11,8 @@ import {
   login,
   logout,
   getlevelnames,
+  getUserByName,getUserForNational,
+
 } from "../controllers/authController.js";
 
 import {
@@ -31,6 +33,8 @@ router.post("/login", login);
 router.post("/logout", logout);
 router.get("/getdatabylevel/:identifier", getDataByLevel);
 router.get("/getdatabyname/:identifier", getDataByName);
+router.get("/getuserbyname/:name",getUserByName);
+router.get("/getuserfornational",getUserForNational);
 
 //Protected Routes
 router.put(

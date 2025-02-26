@@ -7,7 +7,7 @@ function Contact()
     return( <div className="p-20">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           
-        <Link to="contact/national">
+        <Link to="/contact/national">
           <Card title="Mof Contact" imageSrc="./emblem.png" />
         </Link>
         <Link to="/contact/ministry">

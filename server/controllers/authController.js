@@ -106,6 +106,45 @@ const getlevelnames = async (req, res) => {
       .status(500)
       .json({ message: "Server error", error: error.message });
   }
+
 };
 
-export { register, logout,getlevelnames};
+
+const getUserByName = async (req, res) => {
+  try {
+    const { name } = req.params;
+    
+    if (!name) {
+      return res.status(400).json({ message: "Name parameter is required" });
+    }
+
+    const user = await User.findOne({ name }, "email contactNumber name level");
+    
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+const getUserForNational = async (req, res) => {
+    try {
+      
+      const user = await User.findOne({ level:"National" }, "email contactNumber name level");
+      
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+      
+      res.status(200).json(user);
+    } catch (error) {
+      res.status(500).json({ message: "Server error", error: error.message });
+    }
+  };
+
+
+
+
+export { register, logout,getlevelnames,getUserByName,getUserForNational};

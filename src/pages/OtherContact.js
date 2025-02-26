@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
-
-const NationalContact = () => {
+import { useParams } from "react-router";
+ const OtherContact = () => {
   const [user, setUser] = useState(null);
+  const {name}=useParams();
 
   useEffect(() => {
-    const fetchDataByLevel = async () => {
+    const fetchDataByName = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/getuserfornational`);
+        const response = await fetch(`http://localhost:5000/getuserbyname/${name}`);
         if (!response.ok) {
           throw new Error(`Error fetching data: ${response.statusText}`);
         }
@@ -19,7 +20,7 @@ const NationalContact = () => {
       }
     };
 
-    fetchDataByLevel();
+    fetchDataByName();
   }, []);
 
   if (!user) {
@@ -32,14 +33,22 @@ const NationalContact = () => {
 
 <div className="group bg-white rounded-lg shadow-lg p-6 mb-4 transition duration-300 ease-in-out hover:shadow-xl">
       <h3 className="text-xl font-semibold mb-4 text-blue-600 border-b-2  border-blue-300 pb-2">
-        📌 Contact Info for Ministry of Finance
+        📌 Contact Info for {user.name}
       </h3>
 
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
         <div className="col-span-2 space-y-8">
+        <p className="text-lg">
+            <strong className="text-blue-600 ">Level:</strong>{" "}
+            {user.level || "N/A"}
+          </p>
           <p className="text-lg">
             <strong className="text-blue-600 ">Email:</strong>{" "}
             {user.email || "N/A"}
+          </p>
+          <p className="text-lg">
+            <strong className="text-blue-600 ">Name:</strong>{" "}
+            {user.name || "N/A"}
           </p>
           <p className="text-lg">
             <strong className="text-blue-600 ">Contact Number:</strong>{" "}
@@ -58,4 +67,4 @@ const NationalContact = () => {
   );
 };
 
-export default NationalContact;
+export default OtherContact;
