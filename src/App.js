@@ -27,6 +27,7 @@ import Testy from "./pages/testy";
 import Forbidden from "./pages/Forbidden";
 import ContactSearch from "./pages/ContactSearch";
 import NationalContact from "./pages/NationalContact";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -78,6 +79,7 @@ function App() {
             <Route path="/testy" element={<Testy />}></Route>
             <Route path="/forbidden" element={<Forbidden />}></Route>
           </Routes>
+          <Footer></Footer>
         </BrowserRouter>
       </AuthProvider>
     </>
