@@ -1,65 +1,100 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import EstimatedBudget from "../components/EstimatedBudget";
+import ExpectedRevenue from "../components/ExpectedRevenue";
+import CurrentExpenditure from "../components/CurrentExpenditure";
+import CurrentRevenue from "../components/CurrentRevenue";
+import FiscalYear from "../components/FiscalYear";
+import { useParams, useNavigate } from "react-router";
 
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import { Pie } from "react-chartjs-2";
-import { CardContent, Card } from "../components/ui/card";
-import "../css/Tracking.css";
+const Dashboard = () => {
+  const [selectedYear, setSelectedYear] = useState(null);
+  const [data, setData] = useState(null);
+  const [dashboardData, setDashboardData] = useState([]);
+  const { level, name } = useParams();
+  const navigate= useNavigate();
 
-ChartJS.register(ArcElement, Tooltip, Legend);
+  useEffect(() => {
+    // Fetch dashboard data based on level
+    const fetchDataByName = async () => {
+      try {
+        let response;
+        if (level !== "National") {
+          response = await fetch(
+            `http://localhost:5000/dashboardrequestbyname/${name}`,
+            {
+              credentials: "include",
+            }
+          );
+        } else {
+          response = await fetch(
+            `http://localhost:5000/dashboardrequestbylevel/National`,
+            {
+              credentials: "include",
+            }
+          );
+        }
+        if (response.status === 403 || response.status===401) {
+          navigate("/forbidden"); // Navigate to /forbidden if status is 403
+          return; // Exit the function early
+        }
 
-const data = {
-  labels: ["A", "B", "C", "D"],
-  datasets: [
-    {
-      data: [400, 300, 300, 200,],
-      backgroundColor: [
-        "rgba(255, 99, 132, 0.8)",
-        "rgba(54, 162, 235, 0.8)",
-        "rgba(255, 206, 86, 0.8)",
-        "rgba(75, 192, 192, 0.8)",
-      ],
-      borderWidth: 1,
-    },
-  ],
-};
+        if (!response.ok) {
+          throw new Error(`Error fetching data: ${response.statusText}`);
+        }
+        const result = await response.json();
+        setDashboardData(result); // Store fetched data in dashboardData
+        setSelectedYear(Math.max(...result.map((item) => item.date)));
+      } catch (err) {
+        console.error(err.message);
+      }
+    };
 
-const options = {
-  responsive: true,
-  plugins: {
-    legend: {
-      position: "bottom",
-    },
-    title: {
-      display: true,
-      text: "Government Statistics",
-    },
-  },
-};
+    fetchDataByName();
+  }, [name,level,navigate]);
 
-function Dashboard() {
+  useEffect(() => {
+    // Set data based on the selected year
+    if (selectedYear !== null) {
+      const selectedData = dashboardData.find(
+        (item) => item.date === selectedYear
+      );
+      setData(selectedData);
+    }
+  }, [selectedYear, dashboardData]);
+
   return (
-    <>
-      <div className="flex">
-        <div className="flex-1 p-6">
-          <Card>
-            <CardContent>
-              <div className="h-[300px] flex items-center justify-center">
-                <Pie data={data} options={options} />
-              </div>
-              <p className="mt-4 text-muted-foreground">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                sunt in culpa qui officia deserunt mollit anim id est laborum.
-              </p>
-            </CardContent>
-          </Card>
+    <div className="container mx-auto pb-10 px-4 lg:!px-16 font-poppins ">
+      <div className="text-center flex flex-col items-center">
+        <div className="emblem w-[15%] md:w-[8%] mb-2">
+          <img src="/emblem.png" alt="emblem" className="w-[100%]"></img>
         </div>
+        <h2 className="text-base md:text-2xl font-bold mb-4">
+          Welcome to the {level !== "National" ? `${name}` : "National"}{" "}
+          Financial Dashboard
+        </h2>
       </div>
-    </>
+
+      <FiscalYear
+        dashboardData={dashboardData}
+        selectedYear={selectedYear}
+        setSelectedYear={setSelectedYear}
+        data={data || { level: level, name: name || null }} // Pass an empty object if data is null
+      />
+
+      {data ? (
+        <>
+          <EstimatedBudget data={data} />
+          <CurrentExpenditure data={data} />
+          <ExpectedRevenue data={data} />
+          <CurrentRevenue data={data} />
+        </>
+      ) : (
+        <p>
+          {dashboardData.length === 0 ? "No data available." : "Loading..."}
+        </p>
+      )}
+    </div>
   );
-}
+};
+
 export default Dashboard;

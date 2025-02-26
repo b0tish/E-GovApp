@@ -3,32 +3,41 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
 const generateToken = (user) => {
-  return jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, {
+  return jwt.sign({ id: user._id, role: user.role ,name:user.name,level:user.level}, process.env.JWT_SECRET, {
     expiresIn: "1h",
   });
 };
 
 const register = async (req, res) => {
   try {
-    const { email, password, role } = req.body;
+    const { email, password, contactNumber, role, name, level } = req.body;
 
-    const exisitingUser = await User.findOne({ email });
+    const existingUser = await User.findOne({ email });
 
-    if (exisitingUser) {
+    if (existingUser) {
       return res.status(400).json({ message: "Email already in use" });
     }
 
-    const salt = await bcrypt.genSalt(10);
+    // Validate name only if level is not National
+    if (level !== "National" && !name) {
+      return res
+        .status(400)
+        .json({ message: "Name is required when level is not National" });
+    }
 
+    const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
     const user = new User({
       email,
       password: hashedPassword,
-      role: role,
+      contactNumber,
+      role,
+      name: level !== "National" ? name : undefined, // Set name only if level is not National
+      level, // Add level to the user document
     });
     await user.save();
-
+    console.log(user);
     res.status(201).json({ message: "User registered successfully" });
   } catch (error) {
     console.error("Error registering user:", error);
@@ -38,6 +47,7 @@ const register = async (req, res) => {
     res.status(500).json({ message: "Failed to register" });
   }
 };
+
 
 export const login = async (req, res) => {
   const { email, password } = req.body;
@@ -66,7 +76,7 @@ export const login = async (req, res) => {
         sameSite: "Strict",
         maxAge: 60 * 60 * 1000,
       })
-      .json({ success: true, msg: "Login successful", role: user.role });
+      .json({ success: true, msg: "Login successful", user:user });
   } catch (err) {
     console.error("Login Error:", err);
     res.status(500).json({ success: false, error: err.message });
@@ -77,4 +87,25 @@ const logout = (req, res) => {
   res.clearCookie("token").json({ success: true, msg: "Logged out" });
 };
 
-export { register, logout };
+const getlevelnames = async (req, res) => {
+  try {
+    const { level } = req.params; 
+    const formattedLevel =
+      level.charAt(0).toUpperCase() + level.slice(1).toLowerCase();
+   
+
+    // Find all documents matching the level and return only 'name'
+    const results = await User.find({ level: formattedLevel });
+
+    // Extract names into an array
+    const names = results.map((item) => item.name);
+
+    return res.status(200).json({ names });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "Server error", error: error.message });
+  }
+};
+
+export { register, logout,getlevelnames};

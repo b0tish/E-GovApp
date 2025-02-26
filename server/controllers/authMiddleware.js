@@ -12,6 +12,13 @@ export const verifyToken = (req, res, next) => {
   });
 };
 
+export const conditionalVerifyToken = (req, res, next) => {
+  if (req.path.startsWith("/dashboard")) {
+    return verifyToken(req, res, next); // Only apply verifyToken if the path matches
+  }
+  next(); // Skip verification for other paths
+};
+
 export const authorizeRole = (role) => {
   return (req, res, next) => {
     if (req.user.role !== role) {
@@ -19,4 +26,36 @@ export const authorizeRole = (role) => {
     }
     next();
   };
+};
+
+export const authorizeDashboard = () => {
+  return (req, res, next) => {
+    const { identifier } = req.params; // Get name from request parameters
+
+    if (identifier !== "National") {
+      if (req.user.name !== identifier) {
+        return res.status(403).json({ msg: "Access denied" });
+      }
+    } else {
+      console.log(req.user.level);
+      if (req.user.level !== identifier) {
+        return res.status(403).json({ msg: "Access denied" });
+      }
+    }
+    next();
+  };
+};
+
+export const restrictToOwnEntity = (req, res, next) => {
+  const { level, name } = req.body;
+  if (level === "National") {
+    if (req.user.level !== "National") {
+      return res.status(403).json({ msg: "Access denied " });
+    }
+  } else {
+    if (req.user.name !== name) {
+      return res.status(403).json({ msg: "Access denied " });
+    }
+  }
+  next();
 };

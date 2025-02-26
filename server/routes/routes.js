@@ -1,18 +1,24 @@
 import express from "express";
-import { verifyToken, authorizeRole } from "../controllers/authMiddleware.js";
+import {
+  verifyToken,
+  authorizeRole,
+  authorizeDashboard,
+  restrictToOwnEntity,
+} from "../controllers/authMiddleware.js";
 
 import {
-  addProvince,
-  getAllProvince,
-  updateProvince,
-  deleteProvince,
-  addLocal,
-  getAllLocal,
-  updateLocal,
-  deleteLocal,
-} from "../controllers/controller.js";
+  register,
+  login,
+  logout,
+  getlevelnames,
+} from "../controllers/authController.js";
 
-import { register, login, logout } from "../controllers/authController.js";
+import {
+  addbudget,
+  getDataByLevel,
+  getDataByName,
+  updateBudgetById,
+} from "../controllers/budgetController.js";
 
 const router = express.Router();
 
@@ -20,17 +26,41 @@ router.get("/auth-check", verifyToken, (req, res) => {
   res.json({ success: true, user: req.user });
 });
 
-router.get("/provinces", getAllProvince);
-router.put("/province/:provinceId", updateProvince);
-router.delete("/province/:provinceId", deleteProvince);
-router.post("/province/:provinceId/local", addLocal);
-router.get("/province/:provinceId/locals", getAllLocal);
-router.put("/province/:provinceId/local/:localId", updateLocal);
-router.delete("/province/:provinceId/local/localId", deleteLocal);
-router.post("/register", register);
+router.get("/getlevelnames/:level", getlevelnames);
 router.post("/login", login);
 router.post("/logout", logout);
+router.get("/getdatabylevel/:identifier", getDataByLevel);
+router.get("/getdatabyname/:identifier", getDataByName);
 
 //Protected Routes
-router.post("/province", verifyToken, authorizeRole("admin"), addProvince);
+router.put(
+  "/updatebudget/:id",
+  updateBudgetById,
+  verifyToken,
+  authorizeRole("admin"),
+  restrictToOwnEntity,
+);
+
+router.post("/register", verifyToken, authorizeRole("superadmin"), register);
+router.post(
+  "/addbudget",
+  verifyToken,
+  authorizeRole("admin"),
+  restrictToOwnEntity,
+  addbudget,
+);
+
+router.get(
+  "/dashboardrequestbyname/:identifier",
+  verifyToken,
+  authorizeDashboard(), // Use the new custom middleware here
+  getDataByName,
+);
+
+router.get(
+  "/dashboardrequestbylevel/:identifier",
+  verifyToken,
+  authorizeDashboard(), // Use the new custom middleware here
+  getDataByLevel,
+);
 export { router };
