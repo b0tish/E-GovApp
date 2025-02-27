@@ -37,7 +37,6 @@ export const authorizeDashboard = () => {
         return res.status(403).json({ msg: "Access denied" });
       }
     } else {
-      console.log(req.user.level);
       if (req.user.level !== identifier) {
         return res.status(403).json({ msg: "Access denied" });
       }
@@ -48,6 +47,7 @@ export const authorizeDashboard = () => {
 
 export const restrictToOwnEntity = (req, res, next) => {
   const { level, name } = req.body;
+
   if (level === "National") {
     if (req.user.level !== "National") {
       return res.status(403).json({ msg: "Access denied " });

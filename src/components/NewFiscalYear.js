@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { FaCalendarAlt, FaMoneyBillWave, FaArrowRight } from "react-icons/fa"; // Importing icons
 
 const NewFiscalYear = ({ closeModal, setIsConfirmed, data }) => {
   const [formData, setFormData] = useState({
@@ -64,6 +65,7 @@ const NewFiscalYear = ({ closeModal, setIsConfirmed, data }) => {
     e.preventDefault();
     try {
       const response = await fetch("http://localhost:5000/addbudget", {
+        credentials: "include",
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -84,46 +86,58 @@ const NewFiscalYear = ({ closeModal, setIsConfirmed, data }) => {
   };
 
   return (
-    <div className="max-w-lg mx-auto p-5 bg-white shadow-md rounded-lg">
-      <h2 className="text-xl font-semibold mb-4">Star New Fiscal year</h2>
-      <form onSubmit={handleSubmit}>
-        <label className="block font-medium">Level:</label>
+    <div className="max-w-lg mx-auto p-6 bg-white shadow-lg rounded-lg border border-gray-300">
+      <h2 className="text-2xl font-bold text-center mb-4">
+        Start New Fiscal Year
+      </h2>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="flex items-center">
+          <FaArrowRight className="text-blue-600 mr-2" />
+          <label className="block font-medium">Level:</label>
+        </div>
         <input
           type="text"
           name="level"
           value={formData.level}
           onChange={handleChange}
-          className="border p-2 w-full rounded-md"
+          className="border border-gray-300 bg-gray-100 p-2 w-full rounded-md focus:outline-none focus:ring focus:ring-blue-300"
           required
           readOnly
         />
 
         {formData.level !== "National" && (
-          <>
-            <label className="block font-medium mt-3">Name:</label>
+          <div className="space-y-1">
+            <label className="block font-medium">Name:</label>
             <input
               type="text"
               name="name"
               value={formData.name}
               onChange={handleChange}
-              className="border p-2 w-full rounded-md"
+              className="border border-gray-300 bg-gray-100 p-2 w-full rounded-md focus:outline-none focus:ring focus:ring-blue-300"
               required
               readOnly
             />
-          </>
+          </div>
         )}
 
-        <label className="block font-medium mt-3">Date (Year):</label>
-        <input
-          type="number"
-          name="date"
-          value={formData.date}
-          onChange={handleChange}
-          className="border p-2 w-full rounded-md"
-          required
-        />
+        <div className="space-y-1">
+          <div className="flex items-center">
+            <FaCalendarAlt className="text-blue-600 mr-2" />
+            <label className="block font-medium">Date (Year):</label>
+          </div>
+          <input
+            type="number"
+            name="date"
+            value={formData.date}
+            onChange={handleChange}
+            className="border border-gray-300 p-2 w-full rounded-md focus:outline-none focus:ring focus:ring-blue-300"
+            required
+          />
+        </div>
 
-        <h3 className="mt-4 font-semibold">Estimated Budget</h3>
+        <h3 className="mt-4 font-semibold text-lg border-b pb-2">
+          Estimated Budget
+        </h3>
         {Object.keys(formData.EstimatedBudget).map((key) => (
           <div key={key} className="mt-2">
             <label className="block text-sm capitalize">{key}:</label>
@@ -132,14 +146,16 @@ const NewFiscalYear = ({ closeModal, setIsConfirmed, data }) => {
               name={key}
               value={formData.EstimatedBudget[key]}
               onChange={(e) => handleNestedChange(e, "EstimatedBudget")}
-              className="border p-2 w-full rounded-md"
+              className={`border border-gray-300 p-2 w-full rounded-md focus:outline-none focus:ring focus:ring-blue-300 ${key === "total" ? "bg-gray-100" : ""}`}
               required
               readOnly={key === "total"}
             />
           </div>
         ))}
 
-        <h3 className="mt-4 font-semibold">Expected Revenue</h3>
+        <h3 className="mt-4 font-semibold text-lg border-b pb-2">
+          Expected Revenue
+        </h3>
         {Object.keys(formData.ExpectedRevenue).map((key) => (
           <div key={key} className="mt-2">
             <label className="block text-sm capitalize">{key}:</label>
@@ -148,7 +164,7 @@ const NewFiscalYear = ({ closeModal, setIsConfirmed, data }) => {
               name={key}
               value={formData.ExpectedRevenue[key]}
               onChange={(e) => handleNestedChange(e, "ExpectedRevenue")}
-              className="border p-2 w-full rounded-md"
+              className={`border border-gray-300 p-2 w-full rounded-md focus:outline-none focus:ring focus:ring-blue-300 ${key === "total" ? "bg-gray-100" : ""}`}
               required
               readOnly={key === "total"}
             />
@@ -157,16 +173,18 @@ const NewFiscalYear = ({ closeModal, setIsConfirmed, data }) => {
 
         <button
           type="submit"
-          className="mt-4 w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600"
+          className="mt-4 w-full bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700 transition duration-200 flex items-center justify-center"
         >
+          <FaMoneyBillWave className="mr-2" />
           Submit
         </button>
         <button
+          type="button"
           onClick={() => {
             setIsConfirmed(false);
             closeModal();
           }}
-          className="mt-4 w-full bg-gray-400 text-white p-2 rounded-md hover:bg-gray-500"
+          className="mt-2 w-full bg-gray-400 text-white p-2 rounded-md hover:bg-gray-500 transition duration-200"
         >
           Cancel
         </button>

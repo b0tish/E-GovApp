@@ -19,12 +19,11 @@ function HomePrivate() {
   return (
     <div className="p-20">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {isLoggedIn &&
-          user && ( // Check isLoggedIn directly
-            <Link to={`/dashboard/${level}/${name}`}>
-              <Card title="Your Dashboard" imageSrc="/dashboard.jpg" />
-            </Link>
-          )}
+        {isLoggedIn && user && (
+          <Link to={`/dashboard/${level}${name ? `/${name}` : ""}`}>
+            <Card title="Your Dashboard" imageSrc="/dashboard.jpg" />
+          </Link>
+        )}
         <Link to="/national">
           <Card title="National Level Tracking" imageSrc="./emblem.png" />
         </Link>

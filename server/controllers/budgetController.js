@@ -18,16 +18,6 @@ const addbudget = async (req, res) => {
       return res.status(400).json({ message: "Invalid level parameter" });
     }
 
-   
-
-    // Check if a budget entry for the given date already exists
-    // const existingBudget = await BudgetSchema.findOne({ date, level, name });
-    // if (existingBudget) {
-    //   return res.status(400).json({
-    //     message: "Budget entry for this date and level already exists",
-    //   });
-    // }
-
     // Create a new budget entry
     const newBudget = new BudgetSchema({
       level,
@@ -96,7 +86,10 @@ const getDataByName = async (req, res) => {
 
 const updateBudgetById = async (req, res) => {
   const { id } = req.params; // Get the ID from the request parameters
+  
   const updatedData = req.body; // Get the updated data from the request body
+ 
+
 
   try {
     // Find the budget by ID and update it

@@ -5,33 +5,33 @@ const teamMembers = [
   {
     name: "Abik Maharjan",
     role: "Fuchey",
-    image: "https://via.placeholder.com/150",
-    social: { facebook: "#", linkedin: "#", instagram: "#" }
+    image: "https://picsum.photos/150",
+    social: { facebook: "#", linkedin: "#", instagram: "#" },
   },
   {
     name: "Dipesh Shrestha",
     role: "Arko Fuchey",
-    image: "https://via.placeholder.com/150",
-    social: { facebook: "#", linkedin: "#", instagram: "#" }
+    image: "https://picsum.photos/151",
+    social: { facebook: "#", linkedin: "#", instagram: "#" },
   },
   {
     name: "Loozala Bajracharya",
     role: "Fuchi",
-    image: "https://via.placeholder.com/150",
-    social: { facebook: "#", linkedin: "#", instagram: "#" }
+    image: "https://picsum.photos/152",
+    social: { facebook: "#", linkedin: "#", instagram: "#" },
   },
   {
     name: "Saugat Maharjan",
     role: "Fuchey no. 3",
-    image: "https://via.placeholder.com/150",
-    social: { facebook: "#", linkedin: "#", instagram: "#" }
+    image: "https://picsum.photos/153",
+    social: { facebook: "#", linkedin: "#", instagram: "#" },
   },
   {
     name: "Urjala Pariyar",
     role: "Arko Fuchi",
-    image: "https://via.placeholder.com/150",
-    social: { facebook: "#", linkedin: "#", instagram: "#" }
-  }
+    image: "https://picsum.photos/154",
+    social: { facebook: "#", linkedin: "#", instagram: "#" },
+  },
 ];
 
 const About = () => {
@@ -50,7 +50,7 @@ const About = () => {
             <img
               src={member.image}
               alt={member.name}
-              className="w-24 h-24 rounded-full mb-3"
+              className="w-24 h-24 border-gray-100 rounded-full mb-3"
             />
             <h4 className="text-sm font-semibold text-gray-800 text-center">
               {member.name}

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { FaCalendarAlt, FaMoneyBillWave, FaArrowRight } from "react-icons/fa"; // Importing icons
 
 const UpdateFiscalYear = ({ closeModal, setIsConfirmed, data }) => {
   const budgetId = data._id;
   const [formData, setFormData] = useState({
-    role: data.role || "",
     level: data.level || "National",
-    name: data.name || "",
+    name: data.name || undefined,
     date: data.date || "",
     EstimatedBudget: {
       total: data.EstimatedBudget.total,
@@ -50,7 +50,7 @@ const UpdateFiscalYear = ({ closeModal, setIsConfirmed, data }) => {
     return {
       total: Object.values(rest).reduce(
         (acc, val) => acc + Number(val || 0),
-        0,
+        0
       ),
       ...rest,
     };
@@ -58,14 +58,11 @@ const UpdateFiscalYear = ({ closeModal, setIsConfirmed, data }) => {
 
   const handleNestedChange = (e, category) => {
     const { name, value } = e.target;
-
-    // Ensure that only numbers are entered, even though type is text
-    const sanitizedValue = value.replace(/[^0-9]/g, ""); // Remove non-numeric characters
-
+    const sanitizedValue = value.replace(/[^0-9]/g, "");
     setFormData((prev) => {
       const updatedCategory = {
         ...prev[category],
-        [name]: sanitizedValue, // Ensure it's always a valid number
+        [name]: sanitizedValue,
       };
       return {
         ...prev,
@@ -80,13 +77,13 @@ const UpdateFiscalYear = ({ closeModal, setIsConfirmed, data }) => {
       const response = await fetch(
         `http://localhost:5000/updatebudget/${budgetId}`,
         {
-          // Include budgetId in URL
-          method: "PUT", // Change to PUT for updating
+          credentials: "include",
+          method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(formData),
-        },
+        }
       );
 
       if (!response.ok) {
@@ -102,34 +99,42 @@ const UpdateFiscalYear = ({ closeModal, setIsConfirmed, data }) => {
   };
 
   return (
-    <div className="max-w-lg mx-auto p-5 bg-white shadow-md rounded-lg">
-      <h2 className="text-xl font-semibold mb-4">Update Budget</h2>
+    <div className="max-w-lg mx-auto p-6 bg-white shadow-lg rounded-lg border border-gray-300">
+      <h2 className="text-2xl font-bold text-center mb-4 text-gray-700">
+        Update Budget
+      </h2>
       <form onSubmit={handleSubmit}>
-        <label className="block font-medium">Level:</label>
+        <FaArrowRight className="text-blue-600 mr-2" />
+        <label className="block font-medium text-gray-600">Level:</label>
         <input
           type="text"
           value={formData.level}
-          className="border p-2 w-full rounded-md"
+          className="border border-gray-300 p-2 w-full rounded-md focus:outline-none bg-gray-100"
           readOnly
         />
 
         {formData.level !== "National" && (
           <>
-            <label className="block font-medium mt-3">Name:</label>
+            <label className="block font-medium mt-3 text-gray-600">
+              Name:
+            </label>
             <input
               type="text"
               value={formData.name}
-              className="border p-2 w-full rounded-md"
+              className="border border-gray-300 p-2 w-full rounded-md focus:outline-none bg-gray-100"
               readOnly
             />
           </>
         )}
 
-        <label className="block font-medium mt-3">Date (Year):</label>
+        <FaCalendarAlt className="text-blue-600 mr-2" />
+        <label className="block font-medium mt-3 text-gray-600">
+          Date (Year):
+        </label>
         <input
           type="text"
           value={formData.date}
-          className="border p-2 w-full rounded-md"
+          className="border border-gray-300 p-2 w-full rounded-md focus:outline-none bg-gray-100"
           readOnly
         />
 
@@ -140,32 +145,34 @@ const UpdateFiscalYear = ({ closeModal, setIsConfirmed, data }) => {
           "CurrentRevenue",
         ].map((category) => (
           <div key={category} className="mt-4">
-            <h3 className="font-semibold">
+            <h3 className="font-semibold text-lg text-gray-800">
               {category.replace(/([A-Z])/g, " $1").trim()}
             </h3>
 
-            {/* Total Field on Top */}
-            <label className="block text-sm font-semibold mt-2">Total:</label>
+            <label className="block text-sm font-semibold mt-2 text-gray-600">
+              Total:
+            </label>
             <input
               type="text"
               name="total"
               value={formData[category].total}
-              className="border p-2 w-full rounded-md bg-gray-100"
+              className="border border-gray-300 p-2 w-full rounded-md bg-gray-100"
               readOnly
             />
 
-            {/* Other Inputs Below */}
             {Object.keys(formData[category])
               .filter((key) => key !== "total")
               .map((key) => (
                 <div key={key} className="mt-2">
-                  <label className="block text-sm capitalize">{key}:</label>
+                  <label className="block text-sm capitalize text-gray-600">
+                    {key}:
+                  </label>
                   <input
                     type="text"
                     name={key}
                     value={formData[category][key]}
                     onChange={(e) => handleNestedChange(e, category)}
-                    className="border p-2 w-full rounded-md"
+                    className="border border-gray-300 p-2 w-full rounded-md focus:outline-none focus:ring focus:ring-blue-300"
                     required
                   />
                 </div>
@@ -175,13 +182,14 @@ const UpdateFiscalYear = ({ closeModal, setIsConfirmed, data }) => {
 
         <button
           type="submit"
-          className="mt-4 w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600"
+          className="mt-4 w-full bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700 transition duration-200 flex items-center justify-center"
         >
+          <FaMoneyBillWave className="mr-2" />
           Update
         </button>
         <button
           onClick={closeModal}
-          className="mt-4 w-full bg-gray-400 text-white p-2 rounded-md hover:bg-gray-500"
+          className="mt-2 w-full bg-gray-400 text-white p-2 rounded-md hover:bg-gray-500 transition duration-200"
         >
           Cancel
         </button>

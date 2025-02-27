@@ -41,10 +41,6 @@ const NationalTracking = () => {
      }
    }, [selectedYear, dashboardData]);
 
-  if (!data) {
-    return <div>Loading...</div>;
-  } 
-  // Use the first element from dashboardData for demonstration
 
   return (
     <div className="container mx-auto pb-10 px-4 lg:!px-16 font-poppins ">
@@ -57,11 +53,20 @@ const NationalTracking = () => {
         </h2>
       </div>
 
-      <FiscalYear dashboardData={dashboardData} selectedYear={selectedYear} setSelectedYear={setSelectedYear}/>
-      <EstimatedBudget data={data}/>
-      <CurrentExpenditure data={data}/>
-      <ExpectedRevenue data={data}/>
-      <CurrentRevenue data={data}/>
+      <FiscalYear
+        dashboardData={dashboardData}
+        selectedYear={selectedYear}
+        setSelectedYear={setSelectedYear}
+        data={data || {}}
+      />
+      {data ?(
+      <>
+        <EstimatedBudget data={data} />
+        <CurrentExpenditure data={data} />
+        <ExpectedRevenue data={data} />
+        <CurrentRevenue data={data} />
+      </>
+      ):( <p>{dashboardData.length === 0 ? "No data available." : "Loading..."}</p>)}
     </div>
   );
 };

@@ -40,7 +40,7 @@ const CurrentRevenue = ({ data }) => {
 
       const expectedData = Object.entries(data.ExpectedRevenue)
         .map(([key, value]) => ({
-          label: key.replace(/([A-Z])/g, " $1").trim(), // Convert camelCase to readable format
+          label: key.replace(/([A-Z])/g, " $1").trim(), // Convert camelCase to readable format 
           value: value,
         }));
         const currentData =Object.entries(data.CurrentRevenue).map(([key, value]) => ({
