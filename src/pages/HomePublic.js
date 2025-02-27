@@ -14,6 +14,9 @@ function HomePublic() {
       <Link to="/AddProvinceForm">
         <Card title="Add" />
       </Link>
+      <Link to="/projects">
+          <Card title="Projects" imageSrc="./emblem.png" />
+      </Link>
     </div>
   );
 }
