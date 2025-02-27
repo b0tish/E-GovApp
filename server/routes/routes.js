@@ -46,13 +46,14 @@ router.get("/getuserfornational",getUserForNational);
 //Protected Routes
 router.put(
   "/updatebudget/:id",
-  updateBudgetById,
   verifyToken,
   authorizeRole("admin"),
   restrictToOwnEntity,
+  updateBudgetById
 );
 
-router.post("/register", verifyToken, authorizeRole("superadmin"), register);
+//router.post("/register", verifyToken, authorizeRole("superadmin"), register);
+router.post("/register", register);
 router.post(
   "/addbudget",
   verifyToken,

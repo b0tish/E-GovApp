@@ -39,10 +39,10 @@ const ExpectedRevenue = ({ data }) => {
         datasets: [
           {
             data: budgetData.map((item) => item.value), // Extract values dynamically
-            backgroundColor: ["#36A2EB", "#FFCE56", "#FF6384"],
-            hoverBackgroundColor: ["#2196F3", "#FFC107", "#F44336"],
+            backgroundColor: ["#36A2EB", "#FFCE56", "#FF6384", "#43FBC9"],
+            hoverBackgroundColor: ["#2196F3", "#FFC107", "#F44336", "#42EAC9"],
             hoverOffset: 4,
-            },
+          },
         ],
       });
 

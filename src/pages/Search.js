@@ -36,7 +36,7 @@ function Search() {
   // Effect to filter officials based on the search term
   useEffect(() => {
     if (searchTerm !== "") {
-      const result = filteredOfficials.filter((name) =>
+      const result = filteredByLevel.filter((name) =>
         name.toLowerCase().includes(searchTerm.trim().toLowerCase())
       );
       setFilteredOfficials(result);
@@ -44,7 +44,7 @@ function Search() {
       // Fetch officials again if the search term is cleared
       setFilteredOfficials(filteredByLevel);
     }
-  }, [searchTerm,filteredByLevel, filteredOfficials]);
+  }, [searchTerm,filteredByLevel]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -73,10 +73,10 @@ function Search() {
           filteredOfficials.map((official, index) => (
             <Link
               key={index}
-              to={`/${level}/${official}`}
+              to={`/tracking/${level}/${official}`}
               className="group"
             >
-              <div className="border border-gray-300 rounded-md p-3 flex items-center transition duration-300 ease-in-out    group-hover:bg-red-50">
+              <div className="border border-gray-300 rounded-md p-3 flex items-center transition duration-300 ease-in-out group-hover:!bg-red-50">
                 <div className="w-[10%] sm:w-[7%] md:w-[5%] mr-4 flex justify-center">
                   <img alt="emblem" src="/emblem.png" className="w-[100%]" />
                 </div>

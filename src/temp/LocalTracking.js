@@ -4,7 +4,8 @@ import ExpectedRevenue from "../components/ExpectedRevenue";
 import CurrentExpenditure from "../components/CurrentExpenditure";
 import CurrentRevenue from "../components/CurrentRevenue";
 import FiscalYear from "../components/FiscalYear";
-import { useParams } from "react-router";
+import { useParams,Link } from "react-router";
+import { ArrowLeftIcon } from "lucide-react";
 
 const LocalTracking = () => {
   const [selectedYear, setSelectedYear] = useState(null);
@@ -53,6 +54,13 @@ const LocalTracking = () => {
           Welcome to the {lName} Financial Dashboard
         </h2>
       </div>
+
+      <Link to="/search/local">
+        <button className="flex justify-center mt-2 p-2 rounded-lg border-2 border-black hover:ring-2 hover:ring-black hover:!bg-red-100 transition duration-300 ease-in-out">
+          Back
+          <ArrowLeftIcon className="h-6 w-6 text-black mr-2" />
+        </button>
+      </Link>
 
       <FiscalYear
         dashboardData={dashboardData}
