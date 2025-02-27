@@ -22,6 +22,7 @@ import ContactSearch from "./pages/ContactSearch";
 import NationalContact from "./pages/NationalContact";
 import OtherContact from "./pages/OtherContact";
 import Footer from "./components/Footer";
+import Project from "./pages/Project";
 
 function App() {
   return (
@@ -39,8 +40,7 @@ function App() {
             <Route path="/contact/:level/:name" element={<OtherContact/>}/>
             <Route path="/login" element={<Login />} />
             <Route path="/dashboard/:level" element={<Dashboard />} />
-            <Route path="/dashboard/:level/:name" element={<Dashboard />} />
-            <Route path="/tracking" element={<Tracking />} />       
+            <Route path="/dashboard/:level/:name" element={<Dashboard />} />     
             <Route
               path="/register"
               element={
@@ -51,7 +51,8 @@ function App() {
             />
             <Route path="/search/:level" element={<Search />} />
             <Route path="/national" element={<NationalTracking />}></Route>
-            <Route path="/tracking/:level/:name" element={<Tracking/>}></Route>
+            <Route path="/tracking/:level/:name" element={<Tracking/>}></Route>     
+            <Route path="/projects" element={<Project />} />
             <Route path="/forbidden" element={<Forbidden />}></Route>
             <Route path="*" element={<PageNotFound />}></Route>
           </Routes>
@@ -61,5 +62,4 @@ function App() {
     </>
   );
 }
-
 export default App;

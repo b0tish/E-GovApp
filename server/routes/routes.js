@@ -22,6 +22,13 @@ import {
   updateBudgetById,
 } from "../controllers/budgetController.js";
 
+import {
+  addProject,
+  getAllProjects,
+  updateProject,
+  deleteProject
+} from "../controllers/projectController.js"
+
 const router = express.Router();
 
 router.get("/auth-check", verifyToken, (req, res) => {
@@ -68,4 +75,19 @@ router.get(
   authorizeDashboard(), // Use the new custom middleware here
   getDataByLevel,
 );
+
+router.get("/projects", getAllProjects);
+router.post(
+  "/projects",
+  verifyToken,
+  restrictToOwnEntity,
+  addProject,
+);
+router.put(
+  "/projects/:identifier",
+  verifyToken,
+  restrictToOwnEntity,
+  updateProject,
+)
+
 export { router };
