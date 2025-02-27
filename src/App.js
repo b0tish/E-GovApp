@@ -29,6 +29,7 @@ import ContactSearch from "./pages/ContactSearch";
 import NationalContact from "./pages/NationalContact";
 import OtherContact from "./pages/OtherContact";
 import Footer from "./components/Footer";
+import Project from "./pages/Project";
 
 function App() {
   return (
@@ -79,6 +80,7 @@ function App() {
             <Route path="/province/:pName" element={<ProvincialTracking />} />
             <Route path="/local/:lName" element={<LocalTracking />} />
             <Route path="/testy" element={<Testy />}></Route>
+            <Route path="/projects" element={<Project />} />
             <Route path="/forbidden" element={<Forbidden />}></Route>
           </Routes>
           <Footer></Footer>
