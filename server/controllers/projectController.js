@@ -1,4 +1,6 @@
 import { Project } from "../models/ProjectModel.js";
+import { User } from "../models/UserModel.js"
+
 
 const addProject = async (req, res) => {
     try{
@@ -28,6 +30,29 @@ const getAllProjects = async (req, res) => {
         res.status(200).json(projects)
     }catch(error){
         res.status(404).json({error: error.message})
+    }
+};
+
+const getProjectsByName = async (req, res) => {
+    try {
+      const { allocatedBy } = req.params;
+  
+      // Check if the user exists
+      const user = await User.findById(allocatedBy);
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+  
+      // Find projects allocated by this user
+      const projects = await Project.find({ allocatedBy }).populate('allocatedBy', 'name');
+      if (projects.length === 0) {
+        return res.status(404).json({ message: "No projects found allocated by this user" });
+      }
+  
+      return res.status(200).json(projects);
+    } catch (error) {
+      console.error("Error getting projects: ", error);
+      return res.status(500).json({ message: "Internal server error" });
     }
 };
 
@@ -62,6 +87,7 @@ const deleteProject = async (req, res) => {
 export {
     addProject,
     getAllProjects,
+    getProjectsByName,
     updateProject,
     deleteProject,
 };

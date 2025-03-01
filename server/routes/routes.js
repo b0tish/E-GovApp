@@ -26,7 +26,8 @@ import {
   addProject,
   getAllProjects,
   updateProject,
-  deleteProject
+  deleteProject,
+  getProjectsByName
 } from "../controllers/projectController.js"
 
 const router = express.Router();
@@ -77,6 +78,8 @@ router.get(
 );
 
 router.get("/projects", getAllProjects);
+router.get("/projects/:allocatedBy", getProjectsByName);
+
 router.post(
   "/projects",
   verifyToken,
