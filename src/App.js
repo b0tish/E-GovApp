@@ -52,7 +52,7 @@ function App() {
             <Route path="/search/:level" element={<Search />} />
             <Route path="/national" element={<NationalTracking />}></Route>
             <Route path="/tracking/:level/:name" element={<Tracking/>}></Route>     
-            <Route path="/projects" element={<Project />} />
+            <Route path="/tracking/:level/:name/projects" element={<Project />} />
             <Route path="/forbidden" element={<Forbidden />}></Route>
             <Route path="*" element={<PageNotFound />}></Route>
           </Routes>

@@ -36,10 +36,6 @@ function HomePrivate() {
         <Link to="/search/local">
           <Card title="Local Level Tracking" imageSrc="./emblem.png" />
         </Link>
-        <Link to="/projects">
-          <Card title="Projects" imageSrc="./emblem.png" />
-        </Link>
-
       </div>
     </div>
   );

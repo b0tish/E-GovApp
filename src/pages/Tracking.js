@@ -5,7 +5,7 @@ import CurrentExpenditure from "../components/CurrentExpenditure";
 import CurrentRevenue from "../components/CurrentRevenue";
 import FiscalYear from "../components/FiscalYear";
 import { useParams, Link } from "react-router";
-import { ArrowLeftIcon } from "@heroicons/react/solid";
+import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/solid";
 
 const MinistryTracking = () => {
   const [selectedYear, setSelectedYear] = useState(null);
@@ -55,12 +55,20 @@ const MinistryTracking = () => {
         </h2>
       </div>
 
-      <Link to={`/search/${level}`}>
-        <button className="flex justify-center mt-2 p-2 rounded-lg border-2 border-black hover:ring-2 hover:ring-black hover:!bg-red-100 transition duration-300 ease-in-out">
-          Back
-          <ArrowLeftIcon className="h-6 w-6 text-black mr-2" />
-        </button>
-      </Link>
+      <div className="flex">
+        <Link to={`/search/${level}`}>
+          <button className="flex justify-center mt-2 p-2 rounded-lg border-2 border-black hover:ring-2 hover:ring-black hover:!bg-red-100 transition duration-300 ease-in-out">
+            Back
+            <ArrowLeftIcon className="h-6 w-6 text-black mr-2" />
+          </button>
+        </Link>
+        <Link to={`projects`}>
+          <button className="flex justify-center ml-1 mt-2 p-2 rounded-lg text-white border-2 border-red-500 bg-red-500 hover:ring-2 hover:border-red-600 hover:ring-red-600 hover:!bg-red-600 transition duration-300 ease-in-out">
+            Projects
+            <ArrowRightIcon className="h-6 w-6 text-white mr-2" />
+          </button>
+        </Link>
+      </div>
 
       <FiscalYear
         dashboardData={dashboardData}

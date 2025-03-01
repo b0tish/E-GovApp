@@ -4,13 +4,19 @@ import { ArrowLeftIcon } from "@heroicons/react/solid";
 
 
 function Project() {
+  const { level, name } = useParams()
 
   const data = [
-    {"title": "project1","description": "testestsets setse t se ts et", "allocatedBy": "Ministry of Health", "startDate": "2024-02-03", "endDate": "2028-04-05", "allocatedAmount": "50000000", "completionRate": "10", "lastUpdated": "2024-02-05"},
-    {"title": "project2","description": "testestsets setse t se ts et", "allocatedBy": "Ministry of Health", "startDate": "2024-02-03", "endDate": "2028-04-05", "allocatedAmount": "50000000", "completionRate": "10", "lastUpdated": "2024-02-05"}
+    {"title": "project1","description": "testestsets setse t se ts et", "allocatedBy": "Ministry of Defence", "startDate": "2024-02-03", "endDate": "2028-04-05", "allocatedAmount": "50000000", "completionRate": "10", "lastUpdated": "2024-02-05"},
+    {"title": "project2","description": "testestsets setse t se ts et", "allocatedBy": "Ministry of Defence", "startDate": "2024-02-03", "endDate": "2028-04-05", "allocatedAmount": "52000000", "completionRate": "10", "lastUpdated": "2024-02-05"},
+    {"title": "project3","description": "testestsets setse t se ts et", "allocatedBy": "Lumbini Province", "startDate": "2024-02-03", "endDate": "2028-04-05", "allocatedAmount": "53000000", "completionRate": "10", "lastUpdated": "2024-02-05"},
+    {"title": "project4","description": "testestsets setse t se ts et", "allocatedBy": "Lumbini Province", "startDate": "2024-02-03", "endDate": "2028-04-05", "allocatedAmount": "54000000", "completionRate": "10", "lastUpdated": "2024-02-05"},
+    {"title": "project5","description": "testestsets setse t se ts et", "allocatedBy": "Ministry of Education", "startDate": "2024-02-03", "endDate": "2028-04-05", "allocatedAmount": "55000000", "completionRate": "10", "lastUpdated": "2024-02-05"},
   ]
 
-  const [projectData, setProjectData] = useState(data);
+  const filteredData = data.filter((d) => d.allocatedBy.toLocaleLowerCase() === name.toLocaleLowerCase())
+
+  const [projectData, setProjectData] = useState(filteredData);
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -28,7 +34,7 @@ function Project() {
 
     } else {
       // Fetch officials again if the search term is cleared
-      setProjectData(data);
+      setProjectData(filteredData);
     }
   }, [searchTerm]);
 
