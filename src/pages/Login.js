@@ -34,23 +34,27 @@ function Login() {
   };
 
   return (
-    <div className="container">
-      <h2>Login as Government Official</h2>
-      <input
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="Email"
-      />
-      <input
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        placeholder="Password"
-      />
-      <button onClick={handleLogin}>Login</button>
+    <div className="h-screen flex justify-center items-center">
+      <div className="w-[500px] px-10 py-32 text-center flex flex-col bg-white rounded-lg shadow-md">
+        <h2 className="h1 -translate-y-5">Welcome</h2>
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Email"
+          className="py-2 mx-3 my-2 border-b-2 border-b-red-400 transition-colors duration-300 ease-linear focus:outline-none focus:border-b-red-600"
+        />
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Password"
+          className="py-2 mx-3 my-2 border-b-2 border-b-red-400 transition-colors duration-300 ease-linear focus:outline-none focus:border-b-red-600"
+        />
+        <button onClick={handleLogin} className="mt-4 mx-3 p-2 bg-red-500 text-white text-lg font-bold border-2 rounded-md border-red-600">Login</button>
 
-      {error && <p style={{ color: "red" }}> {error}</p>}
+        {error && <p style={{ color: "red" }}> {error}</p>}
+      </div>
     </div>
   );
 }
