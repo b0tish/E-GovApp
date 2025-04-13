@@ -36,6 +36,11 @@ function HomePrivate() {
         <Link to="/search/local">
           <Card title="Local Level Tracking" imageSrc="./emblem.png" />
         </Link>
+        {isLoggedIn && user && (
+        <Link >
+          <Card title="Complaint" imageSrc="./complaint.jpg" />
+        </Link>
+        )}
       </div>
     </div>
   );
