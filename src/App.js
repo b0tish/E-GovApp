@@ -9,6 +9,7 @@ import Tracking from "./pages/Tracking";
 import { BrowserRouter, Routes, Route } from "react-router";
 import "./App.css";
 import PageNotFound from "./pages/PageNotFound";
+import AddProject from "./components/AddProject";
 
 import Search from "./pages/Search";
 
@@ -41,6 +42,8 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/dashboard/:level" element={<Dashboard />} />
             <Route path="/dashboard/:level/:name" element={<Dashboard />} />     
+            <Route path="/dashboard/:level/:name/projects" element={<Project />} />     
+            <Route path="/dashboard/:level/:name/projects/add" element={<Project />} />     
             <Route
               path="/register"
               element={
