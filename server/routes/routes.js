@@ -29,6 +29,10 @@ import {
   deleteProject,
   getProjectsByName
 } from "../controllers/projectController.js"
+import{
+  addComplaint,
+  getComplaintByName
+} from "../controllers/complaintController.js"
 
 const router = express.Router();
 
@@ -93,5 +97,7 @@ router.put(
   restrictToOwnEntity,
   updateProject,
 )
+router.post("/addComplaint",addComplaint);
+router.get("/getComplaintByName/:identifier",verifyToken,authorizeDashboard(),getComplaintByName)
 
 export { router };

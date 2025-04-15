@@ -1,19 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faUser,
-  faEnvelope,
-  faPhone,
-  faStar,
-} from "@fortawesome/free-solid-svg-icons";
 import { ArrowLeftIcon } from "lucide-react";
-
-
 
 const OtherContact = () => {
   const [user, setUser] = useState(null);
   const { name } = useParams();
+
   const [formData, setFormData] = useState({
     senderName: "",
     senderEmail: "",
@@ -23,9 +15,7 @@ const OtherContact = () => {
   useEffect(() => {
     const fetchDataByName = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:5000/getuserbyname/${name}`
-        );
+        const response = await fetch(`http://localhost:5000/getuserbyname/${name}`);
         if (!response.ok) {
           throw new Error(`Error fetching data: ${response.statusText}`);
         }
@@ -40,15 +30,50 @@ const OtherContact = () => {
   }, [name]);
 
   const handleChange = (e) => {
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission logic here (e.g., POST to backend)
-    console.log("Submitted Data:", formData);
+    if (!user) return;
+  
+    const complaintData = {
+      name: user.name, // recipient
+      level: user.level,
+      yourName: formData.senderName,
+      yourEmail: formData.senderEmail,
+      complaintDescription: formData.complaint,
+    };
+  
+    try {
+      const response = await fetch("http://localhost:5000/addComplaint", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(complaintData),
+      });
+  
+      if (!response.ok) {
+        throw new Error("Failed to submit complaint");
+      }
+  
+      alert("Complaint submitted successfully!");
+      setFormData({
+        senderName: "",
+        senderEmail: "",
+        complaint: "",
+      });
+    } catch (error) {
+      console.error("Submission Error:", error.message);
+      alert("There was a problem submitting the complaint.");
+    }
   };
 
+  
   if (!user) {
     return (
       <div className="text-center text-xl font-semibold mt-10">Loading...</div>
@@ -73,109 +98,52 @@ const OtherContact = () => {
           {/* Left: Ministry/Contact Info */}
           <div className="col-span-2 space-y-4">
             <div>
-              <label className="block text-blue-600 font-semibold mb-1">
-                Level:
-              </label>
-              <input
-                type="text"
-                value={user.level}
-                readOnly
-                className="w-full p-2 border rounded bg-gray-100"
-              />
+              <label className="block text-blue-600 font-semibold mb-1">Level:</label>
+              <input type="text" value={user.level} readOnly className="w-full p-2 border rounded bg-gray-100" />
             </div>
             <div>
-              <label className="block text-blue-600 font-semibold mb-1">
-                Name:
-              </label>
-              <input
-                type="text"
-                value={user.name}
-                readOnly
-                className="w-full p-2 border rounded bg-gray-100"
-              />
+              <label className="block text-blue-600 font-semibold mb-1">Name:</label>
+              <input type="text" value={user.name} readOnly className="w-full p-2 border rounded bg-gray-100" />
             </div>
             <div>
-              <label className="block text-blue-600 font-semibold mb-1">
-                Email:
-              </label>
-              <input
-                type="email"
-                value={user.email}
-                readOnly
-                className="w-full p-2 border rounded bg-gray-100"
-              />
+              <label className="block text-blue-600 font-semibold mb-1">Email:</label>
+              <input type="email" value={user.email} readOnly className="w-full p-2 border rounded bg-gray-100" />
             </div>
             <div>
-              <label className="block text-blue-600 font-semibold mb-1">
-                Contact Number:
-              </label>
-              <input
-                type="text"
-                value={user.contactNumber}
-                readOnly
-                className="w-full p-2 border rounded bg-gray-100"
-              />
+              <label className="block text-blue-600 font-semibold mb-1">Contact Number:</label>
+              <input type="text" value={user.contactNumber} readOnly className="w-full p-2 border rounded bg-gray-100" />
             </div>
           </div>
 
           {/* Right: Complaint Form */}
           <div className="col-span-3">
-            <form
-              onSubmit={handleSubmit}
-              className="space-y-4 bg-gray-50 p-6 rounded-lg border border-gray-300"
-            >
-              <h4 className="text-lg font-semibold text-red-600 mb-2">
-                📝 Submit Your Complaint
-              </h4>
+            <form onSubmit={handleSubmit} className="space-y-4 bg-gray-50 p-6 rounded-lg border border-gray-300">
+              <h4 className="text-lg font-semibold text-red-600 mb-2">📝 Submit Your Complaint</h4>
 
               <div>
-             
-              <input
-                type="text"
-                value={user.level}
-                hidden
-                className="w-full p-2 border rounded bg-gray-100"
-              />
-            </div>
-            <div>
-              
-              <input
-                type="text"
-                value={user.name}
-                hidden
-                className="w-full p-2 border rounded bg-gray-100"
-              />
-                <label className="block text-gray-700 font-medium mb-1">
-                  Your Name:
-                </label>
+                <label className="block text-gray-700 font-medium mb-1">Your Name:</label>
                 <input
                   type="text"
                   name="senderName"
                   value={formData.senderName}
                   onChange={handleChange}
-                  required
                   className="w-full p-2 border rounded"
                 />
               </div>
 
               <div>
-                <label className="block text-gray-700 font-medium mb-1">
-                  Your Email:
-                </label>
+                <label className="block text-gray-700 font-medium mb-1">Your Email:</label>
                 <input
                   type="email"
                   name="senderEmail"
                   value={formData.senderEmail}
                   onChange={handleChange}
-                  required
                   className="w-full p-2 border rounded"
                 />
               </div>
 
               <div>
-                <label className="block text-gray-700 font-medium mb-1">
-                  Complaint Description:
-                </label>
+                <label className="block text-gray-700 font-medium mb-1">Complaint Description:</label>
                 <textarea
                   name="complaint"
                   value={formData.complaint}
@@ -186,10 +154,7 @@ const OtherContact = () => {
                 />
               </div>
 
-              <button
-                type="submit"
-                className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition"
-              >
+              <button type="submit" className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition">
                 Submit Complaint
               </button>
             </form>

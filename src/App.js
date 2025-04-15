@@ -23,6 +23,7 @@ import NationalContact from "./pages/NationalContact";
 import OtherContact from "./pages/OtherContact";
 import Footer from "./components/Footer";
 import Project from "./pages/Project";
+import Complaint from "./pages/Complaint";
 
 function App() {
   return (
@@ -40,7 +41,9 @@ function App() {
             <Route path="/contact/:level/:name" element={<OtherContact/>}/>
             <Route path="/login" element={<Login />} />
             <Route path="/dashboard/:level" element={<Dashboard />} />
-            <Route path="/dashboard/:level/:name" element={<Dashboard />} />     
+            <Route path="/dashboard/:level/:name" element={<Dashboard />} /> 
+            <Route path="/complaint/:level" element={<Complaint />} />
+            <Route path="/complaint/:level/:name" element={<Complaint />} />     
             <Route
               path="/register"
               element={
