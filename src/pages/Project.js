@@ -2,66 +2,52 @@ import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { ArrowLeftIcon } from "@heroicons/react/solid";
 
-
 function Project() {
-  const { level, name } = useParams()
+  const { name } = useParams();
 
-  // const data = [
-  //   {"title": "project1","description": "testestsets setse t se ts et", "allocatedBy": "Ministry of Defence", "startDate": "2024-02-03", "endDate": "2028-04-05", "allocatedAmount": "50000000", "completionRate": "10", "lastUpdated": "2024-02-05"},
-  //   {"title": "project2","description": "testestsets setse t se ts et", "allocatedBy": "Ministry of Defence", "startDate": "2024-02-03", "endDate": "2028-04-05", "allocatedAmount": "52000000", "completionRate": "10", "lastUpdated": "2024-02-05"},
-  //   {"title": "project3","description": "testestsets setse t se ts et", "allocatedBy": "Lumbini Province", "startDate": "2024-02-03", "endDate": "2028-04-05", "allocatedAmount": "53000000", "completionRate": "10", "lastUpdated": "2024-02-05"},
-  //   {"title": "project4","description": "testestsets setse t se ts et", "allocatedBy": "Lumbini Province", "startDate": "2024-02-03", "endDate": "2028-04-05", "allocatedAmount": "54000000", "completionRate": "10", "lastUpdated": "2024-02-05"},
-  //   {"title": "project5","description": "testestsets setse t se ts et", "allocatedBy": "Ministry of Education", "startDate": "2024-02-03", "endDate": "2028-04-05", "allocatedAmount": "55000000", "completionRate": "10", "lastUpdated": "2024-02-05"},
-  // ]
   const [data, setData] = useState([]);
-  
-
-  const filteredData = data.filter((d) => d.allocatedBy.toLocaleLowerCase() === name.toLocaleLowerCase())
-
-  const [projectData, setProjectData] = useState(filteredData);
+  const [projectData, setProjectData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-
   useEffect(() => {
     const fetchDataByName = async () => {
-      try {
-        const response = await fetch(
-          `http://localhost:5000/projects/${name}`
-        );
-        console.log(response);
+      setLoading(true);
+      setError(null);
 
+      try {
+        const response = await fetch(`http://localhost:5000/projects/${name}`);
         if (!response.ok) {
           throw new Error(`Error fetching data: ${response.statusText}`);
         }
-        console.log(response);
-        // setData(response.);
+
+        const jsonData = await response.json();
+        setData(jsonData);
+
+        const filtered = jsonData.filter(
+          (d) => d.allocatedBy.toLowerCase() === name.toLowerCase()
+        );
+        setProjectData(filtered);
       } catch (err) {
-        console.error(err.message);
+        console.error(err);
+        setError(err.message);
+      } finally {
+        setLoading(false);
       }
     };
+
     fetchDataByName();
-  }, [name])
+  }, [name]);
 
-  // Effect to filter officials based on the search term
   useEffect(() => {
-    if (searchTerm !== "") {
-      const result = filteredData.filter((project) =>
-        project["title"].toLowerCase().includes(searchTerm.trim().toLowerCase())
-      );
-      console.log(result);
-      setProjectData(result);
-      console.log(projectData);
+    const filtered = data.filter((project) =>
+      project.title.toLowerCase().includes(searchTerm.trim().toLowerCase())
+    );
+    setProjectData(filtered);
+  }, [searchTerm, data]);
 
-    } else {
-      // Fetch officials again if the search term is cleared
-      setProjectData(filteredData);
-    }
-  }, [searchTerm]);
-
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
+  if (loading) return <div className="text-center mt-5">Loading...</div>;
 
   return (
     <div className="py-8 flex justify-center font-poppins overflow-x-scroll">
@@ -91,36 +77,36 @@ function Project() {
         <div className="table w-full">
           <div className="table-header-group ">
             <div className="table-row ">
-              <div className="table-cell text-left">ID</div>
-              <div className="table-cell text-left">Title</div>
-              <div className="table-cell text-left">Description</div>
-              <div className="table-cell text-left">Allocated By</div>
-              <div className="table-cell text-left">Allocated Amount</div>
-              <div className="table-cell text-left">Start Date</div>
-              <div className="table-cell text-left">Estimated End Date</div>
-              <div className="table-cell text-left">Completion Rate</div>
-              <div className="table-cell text-left">Last Updated</div>
+              <div className="table-cell text-left font-semibold">ID</div>
+              <div className="table-cell text-left font-semibold">Title</div>
+              <div className="table-cell text-left font-semibold">Description</div>
+              <div className="table-cell text-left font-semibold">Allocated By</div>
+              <div className="table-cell text-left font-semibold">Allocated Amount</div>
+              <div className="table-cell text-left font-semibold">Start Date</div>
+              <div className="table-cell text-left font-semibold">Estimated End Date</div>
+              <div className="table-cell text-left font-semibold">Completion Rate</div>
+              <div className="table-cell text-left font-semibold">Last Updated</div>
             </div>
           </div>
           <div className="table-row-group">
-            {projectData.length > 0 ? (
+            {projectData && projectData.length > 0 ? (
               projectData.map((project, index) => (
                 <div className="table-row" key={index}>
-                  <div className="table-cell text-left py-3">{index+1}</div>
-                  <div className="table-cell text-left py-3">{project["title"]}</div>
-                  <div className="table-cell text-left py-3">{project["description"].slice(20)}</div>
-                  <div className="table-cell text-left py-3">{project["allocatedBy"]}</div>
-                  <div className="table-cell text-left py-3">Rs.{project["allocatedAmount"]}</div>
-                  <div className="table-cell text-left py-3">{project["startDate"]}</div>
-                  <div className="table-cell text-left py-3">{project["endDate"]}</div>
-                  <div className="table-cell text-left py-3">{project["completionRate"]}%</div>
-                  <div className="table-cell text-left py-3">{project["lastUpdated"]}</div>
+                  <div className="table-cell text-left py-3">{index + 1}</div>
+                  <div className="table-cell text-left py-3">{project.title}</div>
+                  <div className="table-cell text-left py-3">
+                    {project.description?.slice(0, 50)}...
+                  </div>
+                  <div className="table-cell text-left py-3">{project.allocatedBy}</div>
+                  <div className="table-cell text-left py-3">Rs. {project.allocatedAmount}</div>
+                  <div className="table-cell text-left py-3">{project.startDate}</div>
+                  <div className="table-cell text-left py-3">{project.endDate}</div>
+                  <div className="table-cell text-left py-3">{project.completionRate}%</div>
+                  <div className="table-cell text-left py-3">{project.lastUpdated}</div>
                 </div>
               ))
-            ): (
-              <div className="border border-gray-300 rounded-md p-4 bg-white text-gray-500">
-                No Results found
-              </div>
+            ) : (
+              <div className="p-4 col-span-full text-gray-500">No results found.</div>
             )}
           </div>
         </div>
