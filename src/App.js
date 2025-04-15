@@ -24,6 +24,7 @@ import NationalContact from "./pages/NationalContact";
 import OtherContact from "./pages/OtherContact";
 import Footer from "./components/Footer";
 import Project from "./pages/Project";
+import Complaint from "./pages/Complaint";
 
 function App() {
   return (
@@ -44,6 +45,8 @@ function App() {
             <Route path="/dashboard/:level/:name" element={<Dashboard />} />     
             <Route path="/dashboard/:level/:name/projects" element={<Project />} />     
             <Route path="/dashboard/:level/:name/projects/add" element={<Project />} />     
+            <Route path="/complaint/:level" element={<Complaint />} />
+            <Route path="/complaint/:level/:name" element={<Complaint />} /> 
             <Route
               path="/register"
               element={

@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faEnvelope,
-  faPhone,
-} from "@fortawesome/free-solid-svg-icons";
+
 
 const NationalContact = () => {
   const [user, setUser] = useState(null);
   const [formData, setFormData] = useState({
-    senderName: "",
-    senderEmail: "",
-    complaint: "",
+    name:"National",
+    level:"National",
+    yourName: "",
+    yourEmail: "",
+    complaintDescription: "",
   });
 
   useEffect(() => {
@@ -34,9 +32,41 @@ const NationalContact = () => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Submitted Complaint:");
+    if (!user) return;
+  
+    const complaintData = {
+      name: "National", 
+      level: "National",
+      yourName: formData.senderName,
+      yourEmail: formData.senderEmail,
+      complaintDescription: formData.complaint,
+    };
+  
+    try {
+      const response = await fetch("http://localhost:5000/addComplaint", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(complaintData),
+      });
+  
+      if (!response.ok) {
+        throw new Error("Failed to submit complaint");
+      }
+  
+      alert("Complaint submitted successfully!");
+      setFormData({
+        yourName: "",
+        yourEmail: "",
+        complaintDescription: "",
+      });
+    } catch (error) {
+      console.error("Submission Error:", error.message);
+      alert("There was a problem submitting the complaint.");
+    }
   };
 
   return (
@@ -96,7 +126,7 @@ const NationalContact = () => {
                   📝 Submit Your Complaint
                 </h4>
 
-                <input type="hidden" value={user.name} />
+                <input type="hidden" value={user.level} />
                 <input type="hidden" value={user.level} />
 
                 <div>
@@ -108,7 +138,6 @@ const NationalContact = () => {
                     name="senderName"
                     value={formData.senderName}
                     onChange={handleChange}
-                    required
                     className="w-full p-2 border rounded"
                   />
                 </div>
@@ -122,7 +151,6 @@ const NationalContact = () => {
                     name="senderEmail"
                     value={formData.senderEmail}
                     onChange={handleChange}
-                    required
                     className="w-full p-2 border rounded"
                   />
                 </div>
