@@ -1,5 +1,4 @@
 import { Project } from "../models/ProjectModel.js";
-import { User } from "../models/UserModel.js"
 
 
 const addProject = async (req, res) => {
@@ -37,14 +36,9 @@ const getProjectsByName = async (req, res) => {
     try {
       const { allocatedBy } = req.params;
   
-      // Check if the user exists
-      const user = await User.findById(allocatedBy);
-      if (!user) {
-        return res.status(404).json({ message: "User not found" });
-      }
-  
       // Find projects allocated by this user
-      const projects = await Project.find({ allocatedBy }).populate('allocatedBy', 'name');
+      const projects = await Project.find({allocatedBy});
+      console.log(projects)
       if (projects.length === 0) {
         return res.status(404).json({ message: "No projects found allocated by this user" });
       }

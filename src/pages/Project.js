@@ -6,13 +6,15 @@ import { ArrowLeftIcon } from "@heroicons/react/solid";
 function Project() {
   const { level, name } = useParams()
 
-  const data = [
-    {"title": "project1","description": "testestsets setse t se ts et", "allocatedBy": "Ministry of Defence", "startDate": "2024-02-03", "endDate": "2028-04-05", "allocatedAmount": "50000000", "completionRate": "10", "lastUpdated": "2024-02-05"},
-    {"title": "project2","description": "testestsets setse t se ts et", "allocatedBy": "Ministry of Defence", "startDate": "2024-02-03", "endDate": "2028-04-05", "allocatedAmount": "52000000", "completionRate": "10", "lastUpdated": "2024-02-05"},
-    {"title": "project3","description": "testestsets setse t se ts et", "allocatedBy": "Lumbini Province", "startDate": "2024-02-03", "endDate": "2028-04-05", "allocatedAmount": "53000000", "completionRate": "10", "lastUpdated": "2024-02-05"},
-    {"title": "project4","description": "testestsets setse t se ts et", "allocatedBy": "Lumbini Province", "startDate": "2024-02-03", "endDate": "2028-04-05", "allocatedAmount": "54000000", "completionRate": "10", "lastUpdated": "2024-02-05"},
-    {"title": "project5","description": "testestsets setse t se ts et", "allocatedBy": "Ministry of Education", "startDate": "2024-02-03", "endDate": "2028-04-05", "allocatedAmount": "55000000", "completionRate": "10", "lastUpdated": "2024-02-05"},
-  ]
+  // const data = [
+  //   {"title": "project1","description": "testestsets setse t se ts et", "allocatedBy": "Ministry of Defence", "startDate": "2024-02-03", "endDate": "2028-04-05", "allocatedAmount": "50000000", "completionRate": "10", "lastUpdated": "2024-02-05"},
+  //   {"title": "project2","description": "testestsets setse t se ts et", "allocatedBy": "Ministry of Defence", "startDate": "2024-02-03", "endDate": "2028-04-05", "allocatedAmount": "52000000", "completionRate": "10", "lastUpdated": "2024-02-05"},
+  //   {"title": "project3","description": "testestsets setse t se ts et", "allocatedBy": "Lumbini Province", "startDate": "2024-02-03", "endDate": "2028-04-05", "allocatedAmount": "53000000", "completionRate": "10", "lastUpdated": "2024-02-05"},
+  //   {"title": "project4","description": "testestsets setse t se ts et", "allocatedBy": "Lumbini Province", "startDate": "2024-02-03", "endDate": "2028-04-05", "allocatedAmount": "54000000", "completionRate": "10", "lastUpdated": "2024-02-05"},
+  //   {"title": "project5","description": "testestsets setse t se ts et", "allocatedBy": "Ministry of Education", "startDate": "2024-02-03", "endDate": "2028-04-05", "allocatedAmount": "55000000", "completionRate": "10", "lastUpdated": "2024-02-05"},
+  // ]
+  const [data, setData] = useState([]);
+  
 
   const filteredData = data.filter((d) => d.allocatedBy.toLocaleLowerCase() === name.toLocaleLowerCase())
 
@@ -22,10 +24,30 @@ function Project() {
   const [error, setError] = useState(null);
 
 
+  useEffect(() => {
+    const fetchDataByName = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:5000/projects/${name}`
+        );
+        console.log(response);
+
+        if (!response.ok) {
+          throw new Error(`Error fetching data: ${response.statusText}`);
+        }
+        console.log(response);
+        // setData(response.);
+      } catch (err) {
+        console.error(err.message);
+      }
+    };
+    fetchDataByName();
+  }, [name])
+
   // Effect to filter officials based on the search term
   useEffect(() => {
     if (searchTerm !== "") {
-      const result = projectData.filter((project) =>
+      const result = filteredData.filter((project) =>
         project["title"].toLowerCase().includes(searchTerm.trim().toLowerCase())
       );
       console.log(result);
@@ -47,6 +69,11 @@ function Project() {
         <div className="flex items-center">
           <Link to="/home">
             <ArrowLeftIcon className="h-6 w-6 text-gray-500 mr-2" />
+          </Link>
+          <Link to="add">
+            <button className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-md">
+              Add Project
+            </button>
           </Link>
           <h3 className="text-center font-medium font-sans text-lg sm:text-xl md:text-2xl text-gray-500 mx-auto">
             Select projects

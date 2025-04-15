@@ -4,7 +4,8 @@ import ExpectedRevenue from "../components/ExpectedRevenue";
 import CurrentExpenditure from "../components/CurrentExpenditure";
 import CurrentRevenue from "../components/CurrentRevenue";
 import FiscalYear from "../components/FiscalYear";
-import { useParams, useNavigate } from "react-router";
+import { useParams, useNavigate, Link } from "react-router";
+import { ArrowRightIcon } from "lucide-react";
 
 const Dashboard = () => {
   const [selectedYear, setSelectedYear] = useState(null);
@@ -81,6 +82,8 @@ const Dashboard = () => {
         data={data || { level: level, name: name || null }} // Pass an empty object if data is null
       />
 
+      
+
       {data ? (
         <>
           <EstimatedBudget data={data} />
@@ -92,6 +95,16 @@ const Dashboard = () => {
         <p>
           {dashboardData.length === 0 ? "No data available." : "Loading..."}
         </p>
+      )}
+      { level!=="National" && (
+        <div>
+          <Link to={`projects`}>
+            <button className="flex justify-center ml-1 mt-2 p-2 rounded-lg text-white border-2 border-red-500 bg-red-500 hover:ring-2 hover:border-red-600 hover:ring-red-600 hover:!bg-red-600 transition duration-300 ease-in-out">
+              Projects
+              <ArrowRightIcon className="h-6 w-6 text-white mr-2" />
+            </button>
+          </Link>
+        </div>
       )}
     </div>
   );
