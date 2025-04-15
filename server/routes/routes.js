@@ -87,8 +87,6 @@ router.get("/projects/:allocatedBy", getProjectsByName);
 
 router.post(
   "/projects",
-  verifyToken,
-  restrictToOwnEntity,
   addProject,
 );
 router.put(

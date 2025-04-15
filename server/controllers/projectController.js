@@ -2,26 +2,38 @@ import { Project } from "../models/ProjectModel.js";
 
 
 const addProject = async (req, res) => {
-    try{
-        const { title, description, allocatedById, startDate, endDate, allocatedAmount, completionRate, lastUpdated } = req.body;
-        const project = new Project({
-            title,
-            description,
-            allocatedBy: allocatedById,
-            startDate,
-            endDate,
-            allocatedAmount,
-            completionRate,
-            lastUpdated
-        });
-        await project.save();
-
-        res.statu(201).json(project);
-    }catch(error){
-        console.error("Error adding project: ", error)
-        res.status(400).json({error: error.message})
+    try {
+      const {
+        title,
+        description,
+        allocatedById,
+        startDate,
+        endDate,
+        allocatedAmount,
+        completionRate,
+        lastUpdated
+      } = req.body;
+  
+      const project = new Project({
+        title,
+        description,
+        allocatedBy: allocatedById, // mapped correctly
+        startDate,
+        endDate,
+        allocatedAmount,
+        completionRate,
+        lastUpdated
+      });
+  
+      await project.save();
+  
+      res.status(201).json(project); // ✅ fixed spelling of "status"
+    } catch (error) {
+      console.error("Error adding project: ", error);
+      res.status(400).json({ error: error.message });
     }
-};
+  };
+  
 
 const getAllProjects = async (req, res) => {
     try{
